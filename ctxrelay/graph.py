@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ast
 import io
+import json
 import re
 import shutil
 import sqlite3
@@ -115,18 +116,62 @@ def _tokens(rel: Path, text: str):
             yield i, m.group(2), bool(m.group(1))
 
 
+CACHE_SCHEMA = "CREATE TABLE IF NOT EXISTS parse_cache(path TEXT PRIMARY KEY, sig TEXT, defs TEXT, toks TEXT)"
+
+
+def _sig(root: Path, rel: Path) -> str:
+    st = (root / rel).stat()
+    return f"{st.st_mtime_ns}:{st.st_size}"
+
+
+def stale(root: Path) -> bool:
+    """True if the index is missing or any source file was added, removed or modified since it was built."""
+    if not db_path().exists():
+        return True
+    con = connect()
+    try:
+        cached = dict(con.execute("SELECT path, sig FROM parse_cache"))
+    except sqlite3.OperationalError:
+        return True
+    finally:
+        con.close()
+    now = {str(rel): _sig(root, rel) for rel in _source_files(root)}
+    return now != cached
+
+
+def refresh(root: Path) -> str:
+    """Rebuild only if something changed (unchanged files are not re-parsed). Returns a one-line status."""
+    return build(root) if stale(root) else "index up to date"
+
+
 def build(root: Path) -> str:
+    """Rebuild the graph. Per-file parse results are cached by (mtime, size), so unchanged files are not re-parsed;
+    edges and communities depend on every file's names, so they are always recomputed (cheap) to match a full build."""
+    con = connect()
+    con.execute(CACHE_SCHEMA)
+    cache = {p: (sig, d, t) for p, sig, d, t in con.execute("SELECT path, sig, defs, toks FROM parse_cache")}
     parsed = {}  # rel -> (defs sorted by line, tokens by line)
+    fresh = []
     for rel in _source_files(root):
         try:
+            sig = _sig(root, rel)
+            hit = cache.get(str(rel))
+            if hit and hit[0] == sig:
+                parsed[str(rel)] = ([tuple(d) for d in json.loads(hit[1])], [tuple(t) for t in json.loads(hit[2])])
+                continue
             text = (root / rel).read_text(errors="ignore")
         except OSError:
             continue
         defs = sorted(set(_defs(rel, text)), key=lambda d: d[2])
-        parsed[str(rel)] = (defs, list(_tokens(rel, text)))
+        toks = list(_tokens(rel, text))
+        parsed[str(rel)] = (defs, toks)
+        fresh.append((str(rel), sig, json.dumps(defs), json.dumps(toks)))
 
-    con = connect()
     con.executescript(SCHEMA)
+    con.execute("DELETE FROM parse_cache")
+    fresh_paths = {f[0] for f in fresh}
+    con.executemany("INSERT INTO parse_cache VALUES (?,?,?,?)",
+                    fresh + [(p, *cache[p]) for p in parsed if p not in fresh_paths])
     by_name = defaultdict(list)
     method_of = {}
     per_file = {}
@@ -187,7 +232,7 @@ def build(root: Path) -> str:
     con.executemany("UPDATE files SET community=? WHERE path=?", [(community_ids[label[f]], f) for f in parsed])
     con.commit()
     con.close()
-    return (f"indexed {len(parsed)} files, {len(file_of)} symbols, {len(edges)} edges, "
+    return (f"indexed {len(parsed)} files ({len(fresh)} parsed), {len(file_of)} symbols, {len(edges)} edges, "
             f"{len(set(label.values()))} communities")
 
 
