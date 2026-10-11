@@ -32,6 +32,7 @@ pip install -e .        # Python 3.9+, no dependencies
 cd your-project
 ctxrelay init           # writes AGENTS.md rules (+ CLAUDE.md/GEMINI.md importing it), builds the graph
 ctxrelay init --hooks    # optional: Claude Code hooks record edits/test runs automatically (Codex sessions are recovered from transcripts at switch time)
+ctxrelay                 # (no arguments) shows what is set up and what the next switch would carry; same as `ctxrelay status`
 claude mcp add ctxrelay -- ctxrelay serve     # once per tool
 codex mcp add ctxrelay -- ctxrelay serve
 gemini mcp add ctxrelay ctxrelay serve

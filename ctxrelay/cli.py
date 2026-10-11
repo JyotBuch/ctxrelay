@@ -6,7 +6,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from . import events, graph, handoff, mcp_server, state, switch
+from . import events, graph, handoff, mcp_server, state, switch, ui
 
 MARK_START, MARK_END = "<!-- ctxrelay:start -->", "<!-- ctxrelay:end -->"
 RULES = f"""{MARK_START}
@@ -75,14 +75,20 @@ def cmd_init(a):
             p.write_text(p.read_text().rstrip("\n") + "\n\n@AGENTS.md\n")
     state.home()
     state.ensure_base()
+    print(ui.banner("setting up this project"))
+    print(ui.line("ok", "agent rules written", "AGENTS.md (CLAUDE.md and GEMINI.md import it)"))
     if a.hooks:
         _install_hooks(Path(".claude") / "settings.json")
-        print("Installed Claude Code capture hooks in .claude/settings.json")
-    print(graph.build(state.root()))
-    print("\nConnect the MCP server once per tool:\n"
-          "  claude mcp add ctxrelay -- ctxrelay serve\n"
-          "  codex mcp add ctxrelay -- ctxrelay serve\n"
-          "  gemini mcp add ctxrelay ctxrelay serve")
+        print(ui.line("ok", "capture hooks installed", ".claude/settings.json"))
+    else:
+        print(ui.line("info", "capture hooks not installed", "add them with: ctxrelay init --hooks"))
+    print(ui.line("ok", "code graph built", graph.build(state.root())))
+    print(ui.heading("Connect the MCP server once per tool"))
+    for cmd in ("claude mcp add ctxrelay -- ctxrelay serve", "codex mcp add ctxrelay -- ctxrelay serve",
+                "gemini mcp add ctxrelay ctxrelay serve"):
+        print("  " + ui.paint(cmd, "cyan"))
+    print("\n  Then: " + ui.paint("ctxrelay switch codex", "bold", "cyan")
+          + ui.paint("  when your usage limit hits", "dim") + "\n")
 
 
 def cmd_switch(a):
@@ -94,21 +100,22 @@ def cmd_switch(a):
     fatal, warns = switch.check_destination(a.target, shutil.which)
     if fatal and not a.dry_run:
         sys.exit(f"{fatal}. Handoff not launched; `ctxrelay switch print` shows it, or install {a.target} and retry.")
-    print("graph:", graph.refresh(state.root()))  # unchanged files are not re-parsed
-    print(f"transcripts: recovered {events.ingest()} new event(s)")
+    print(ui.banner(f"switching to {a.target}"))
+    print(ui.line("ok", "graph: " + graph.refresh(state.root())))  # unchanged files are not re-parsed
+    print(ui.line("ok", f"transcripts: recovered {events.ingest()} new event(s)"))
     path = handoff.write()
     problems = switch.verify(state.load(), state.root())
-    print(switch.summary(state.load()))
-    for w in [fatal, *warns]:
-        if w:
-            print("warning:", w)
+    print(ui.line("bad", f"{a.target} CLI: {fatal}") if fatal else ui.line("ok", f"{a.target} CLI ready"))
+    for w in warns:
+        print(ui.line("warn", w))
+    print(ui.line("ok", switch.summary(state.load())))
     for m in problems:
-        print("missing:", m)
-    print(f"handoff: {path} ({len(path.read_text().splitlines())} lines)")
+        print(ui.line("warn", "missing: " + m))
+    print(ui.line("ok", f"handoff: {path} ({len(path.read_text().splitlines())} lines)"))
     if a.dry_run:
-        print("dry run: not launching")
+        print(ui.line("info", "dry run: not launching"))
         return
-    print(f"launching {a.target}…")
+    print(ui.line("ok", f"launching {a.target}…") + "\n")
     os.execvp(argv[0], argv)
 
 
@@ -131,10 +138,12 @@ def cmd_query(a):
 
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="ctxrelay", description=__doc__)
-    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub = ap.add_subparsers(dest="cmd")
     i = sub.add_parser("init", help="write AGENTS.md/CLAUDE.md/GEMINI.md rules, build the graph")
     i.add_argument("--hooks", action="store_true", help="also install Claude Code hooks (edits, test runs)")
     i.set_defaults(fn=cmd_init)
+    sub.add_parser("status", help="show what the next switch would carry").set_defaults(
+        fn=lambda _: print(ui.status_screen(state.root())))
     sub.add_parser("record", help="(hook) record one tool call from stdin").set_defaults(fn=cmd_record)
     sub.add_parser("ingest", help="recover edits/test runs from session transcripts").set_defaults(fn=cmd_ingest)
     sub.add_parser("index", help="rebuild the code graph").set_defaults(fn=lambda _: print(graph.build(state.root())))
@@ -164,6 +173,9 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv=None):
     a = build_parser().parse_args(argv)
     try:
+        if a.cmd is None:  # bare `ctxrelay`: show where this project stands
+            print(ui.status_screen(state.root()))
+            return
         a.fn(a)
     except (RuntimeError, ValueError) as e:
         sys.exit(f"ctxrelay: {e}")
