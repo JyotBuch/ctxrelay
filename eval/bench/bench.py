@@ -178,6 +178,26 @@ def parse_claude(out: str) -> dict:
             "output_tokens": u.get("output_tokens") or 0, "cost_usd": d.get("total_cost_usd")}
 
 
+def invalid_reason(agent: str, raw: str) -> str:
+    """Why a run says nothing about the handoff (agent crashed, rate limit, auth). Empty string = a real attempt."""
+    if agent == "codex":
+        for line in raw.splitlines():
+            if line.startswith("{"):
+                e = json.loads(line)
+                if e.get("type") in ("error", "turn.failed"):
+                    msg = e.get("message") or (e.get("error") or {}).get("message", "")
+                    if msg:
+                        return msg[:200]
+        return "" if raw.strip() else "no output"
+    if agent == "claude":
+        try:
+            d = json.loads(raw)
+        except json.JSONDecodeError:
+            return "unparseable output"
+        return str(d.get("result", ""))[:200] if d.get("is_error") else ""
+    return ""
+
+
 def run_agent(agent: str, prompt: str, cfg: list[str], w: Path, task: str, stub_layer: str) -> tuple[dict, str]:
     if agent == "stub":
         overlay(task, stub_layer, w)
@@ -203,6 +223,9 @@ def run_one(agent, task, cond, rep, stub_layer="solution") -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"{task}_{cond}_{agent}{rep}.raw").write_text(raw)
     res = {"task": task, "cond": cond, "agent": agent, "rep": rep, "wall_s": wall, **metrics, **check(task, w)}
+    bad = invalid_reason(agent, raw)
+    if bad:
+        res["invalid"] = bad  # excluded from every summary; never counts as a handoff failure
     (OUT / f"{task}_{cond}_{agent}{rep}.json").write_text(json.dumps(res, indent=1))
     return res
 
@@ -227,6 +250,8 @@ def validate() -> list[str]:
 
 
 def summarize(rows: list[dict]) -> str:
+    skipped = sum(1 for r in rows if r.get("invalid"))
+    rows = [r for r in rows if not r.get("invalid")]
     keys = sorted({(r["task"], r["cond"]) for r in rows})
     out = ["task | cond | n | success | median wall s | median tool calls | median uncached tok | regressions"]
     for task, cond in keys:
@@ -237,6 +262,8 @@ def summarize(rows: list[dict]) -> str:
             return round(statistics.median(v), 1) if v else "-"
         out.append(f"{task} | {cond} | {len(g)} | {sum(r['success'] for r in g)}/{len(g)} | {med('wall_s')} | "
                    f"{med('tool_calls')} | {med('uncached_tokens')} | {sum(r['regression'] for r in g)}")
+    if skipped:
+        out.append(f"({skipped} invalid run(s) excluded: agent error or usage limit)")
     return "\n".join(out)
 
 
@@ -247,6 +274,7 @@ def main(argv=None) -> int:
     ap.add_argument("--tasks", default="")
     ap.add_argument("--conds", default=",".join(CONDS))
     ap.add_argument("--reps", type=int, default=1)
+    ap.add_argument("--resume", action="store_true", help="skip cells that already have a valid result in BENCH_OUT")
     a = ap.parse_args(argv)
     if a.validate:
         problems = validate()
@@ -257,8 +285,17 @@ def main(argv=None) -> int:
     for name in names:
         for cond in a.conds.split(","):
             for rep in range(a.reps):
+                done = OUT / f"{name}_{cond}_{a.agent}{rep}.json"
+                if a.resume and done.exists() and not json.loads(done.read_text()).get("invalid"):
+                    rows.append(json.loads(done.read_text()))
+                    continue
                 r = run_one(a.agent, name, cond, rep)
                 rows.append(r)
+                if r.get("invalid"):
+                    print(f"{name} {cond} rep{rep}: INVALID ({r['invalid']}); stopping so no more runs are wasted. "
+                          "Re-run later with --resume.", flush=True)
+                    print("\n" + summarize(rows))
+                    return 2
                 print(f"{name} {cond} rep{rep}: success={r['success']} wall={r['wall_s']}s tools={r.get('tool_calls')} "
                       f"uncached={r.get('uncached_tokens')}", flush=True)
     print("\n" + summarize(rows))

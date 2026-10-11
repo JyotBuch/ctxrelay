@@ -1,0 +1,19 @@
+{
+ "task": "big_move_isclass",
+ "cond": "C3",
+ "agent": "codex",
+ "rep": 1,
+ "wall_s": 6.6,
+ "tool_calls": 0,
+ "mcp_calls": 0,
+ "input_tokens": 0,
+ "cached_tokens": 0,
+ "uncached_tokens": 0,
+ "output_tokens": 0,
+ "success": false,
+ "hidden_pass": false,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "2 failed, 1 passed in 0.06s",
+ "invalid": "You\u2019ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 10:02 PM."
+}

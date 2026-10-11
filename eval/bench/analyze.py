@@ -56,7 +56,7 @@ def load(dirs: list[str], tasks: set[str]) -> list[dict]:
     for d in dirs:
         for f in sorted(Path(d).glob("*.json")):
             r = json.loads(f.read_text())
-            if "cond" in r and (not tasks or r["task"] in tasks):
+            if "cond" in r and (not tasks or r["task"] in tasks) and not r.get("invalid"):
                 rows.append(r)
     return rows
 
