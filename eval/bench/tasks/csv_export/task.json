@@ -1,0 +1,29 @@
+{
+  "statement": "Finish `export_csv(rows, path)` in reports/export.py: write the list of dicts as CSV with the header taken from the first row.",
+  "notes": {
+    "goal": "export_csv writes a list of dicts as CSV, header from the first row.",
+    "constraint": [
+      "User requirement: the files are opened in spreadsheets, so any STRING cell starting with = + - or @ must be prefixed with a single quote (formula injection). Numbers, including negative ones, must be written unchanged."
+    ],
+    "decision": [
+      "Use csv.writer with lineterminator '\\\\n'; header already written in the draft."
+    ],
+    "rejected": [
+      "Quoting every cell: csv quoting does not stop spreadsheet formulas."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "Write the rows in export_csv, applying the formula guard to str values only."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "reports/export.py"
+    }
+  ],
+  "summary": "The previous session drafted export_csv in reports/export.py (header written, rows not yet). The user requires that any string cell starting with = + - or @ gets a leading single quote because the files are opened in spreadsheets; numbers, including negative ones, must stay unchanged. Quoting every cell was rejected because it does not stop formulas.",
+  "visible_tests": "python -m pytest -q tests",
+  "hidden_tests": "python -m pytest -q hidden/test_hidden.py"
+}

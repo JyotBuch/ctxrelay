@@ -1,0 +1,29 @@
+{
+  "statement": "Make `fetch_with_retry` in net/client.py retry failed calls.",
+  "notes": {
+    "goal": "fetch_with_retry retries failed calls per the team's policy.",
+    "constraint": [
+      "Policy agreed with the user: at most 3 attempts in total, exponential backoff 1s then 2s via the injected `sleep` argument (tests must never really sleep), retry ONLY TransientError, and NEVER retry POST (not idempotent)."
+    ],
+    "decision": [
+      "`sleep` is injected (already added to the signature)."
+    ],
+    "rejected": [
+      "Catching Exception and retrying everything: hides real errors such as PermissionError."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "Implement the retry loop in fetch_with_retry following the policy; re-raise the last TransientError after the 3rd attempt."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "net/client.py"
+    }
+  ],
+  "summary": "The previous session added an injectable `sleep` argument to fetch_with_retry but no loop yet. The agreed policy: at most 3 attempts total, backoff 1s then 2s via the injected sleep, retry only TransientError, never retry POST. Retrying every exception was rejected.",
+  "visible_tests": "python -m pytest -q tests",
+  "hidden_tests": "python -m pytest -q hidden/test_hidden.py"
+}
