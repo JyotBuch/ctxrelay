@@ -11,3 +11,5 @@ eval/node_modules/
 eval/package*.json
 dist/
 .coverage
+.venv/
+CLAUDE.md
