@@ -1,17 +1,21 @@
 import argparse
+import contextlib
+import json
 import os
 import shutil
 import sys
 from pathlib import Path
 
-from . import graph, handoff, mcp_server, state
+from . import events, graph, handoff, mcp_server, state
 
 MARK_START, MARK_END = "<!-- ctxrelay:start -->", "<!-- ctxrelay:end -->"
 RULES = f"""{MARK_START}
 ## Context handoff (ctxrelay)
 - At the start of a session, read `.ctxrelay/HANDOFF.md` if it exists.
 - When you make a decision, rule out an option, hit a constraint or leave a question open, record it with the
-  `handoff_note` MCP tool (or `ctxrelay note <kind> "<text>"`). Kinds: goal, constraint, decision, rejected, open, next.
+  `handoff_note` MCP tool (or `ctxrelay note <kind> "<text>"`).
+  Kinds: goal, constraint, decision, rejected, hypothesis, open, next. Keep the last `next` note an exact action.
+  Edits, test runs and failures are captured automatically; notes are for intent.
 - Before reading many files to understand structure, query the code graph (`graph_*` MCP tools or `ctxrelay q ...`).
   If you don't know a symbol's name, describe what you want with `search_code` (or `ctxrelay q search "..."`).
 {MARK_END}
@@ -36,7 +40,32 @@ def _write_managed(path: Path, block: str, create_with: str = ""):
     path.write_text(text)
 
 
-def cmd_init(_):
+HOOK_CMD = "ctxrelay record"
+
+
+def _install_hooks(settings: Path) -> None:
+    """Merge ctxrelay's capture hooks into a Claude Code settings file (idempotent)."""
+    data = json.loads(settings.read_text()) if settings.exists() else {}
+    hooks = data.setdefault("hooks", {})
+    for event in ("PostToolUse", "PostToolUseFailure"):
+        groups = hooks.setdefault(event, [])
+        if not any(h.get("command") == HOOK_CMD for g in groups for h in g.get("hooks", [])):
+            groups.append({"matcher": "Bash|Edit|Write|MultiEdit|NotebookEdit",
+                           "hooks": [{"type": "command", "command": HOOK_CMD}]})
+    settings.parent.mkdir(exist_ok=True)
+    settings.write_text(json.dumps(data, indent=2) + "\n")
+
+
+def cmd_record(_):
+    with contextlib.suppress(Exception):  # a capture hook must never break the session
+        events.record_hook(json.load(sys.stdin))
+
+
+def cmd_ingest(_):
+    print(f"recovered {events.ingest()} event(s) from session transcripts")
+
+
+def cmd_init(a):
     _write_managed(Path("AGENTS.md"), RULES)
     for name in ("CLAUDE.md", "GEMINI.md"):  # both support @file imports
         p = Path(name)
@@ -45,6 +74,10 @@ def cmd_init(_):
         elif "@AGENTS.md" not in p.read_text():
             p.write_text(p.read_text().rstrip("\n") + "\n\n@AGENTS.md\n")
     state.home()
+    state.ensure_base()
+    if a.hooks:
+        _install_hooks(Path(".claude") / "settings.json")
+        print("Installed Claude Code capture hooks in .claude/settings.json")
     print(graph.build(state.root()))
     print("\nConnect the MCP server once per tool:\n"
           "  claude mcp add ctxrelay -- ctxrelay serve\n"
@@ -53,6 +86,7 @@ def cmd_init(_):
 
 
 def cmd_switch(a):
+    events.ingest()  # recover anything the hooks missed (e.g. Codex sessions)
     path = handoff.write()
     if a.print_only or a.target == "print":
         print(path.read_text())
@@ -86,7 +120,11 @@ def cmd_query(a):
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="ctxrelay", description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("init", help="write AGENTS.md/CLAUDE.md/GEMINI.md rules, build the graph").set_defaults(fn=cmd_init)
+    i = sub.add_parser("init", help="write AGENTS.md/CLAUDE.md/GEMINI.md rules, build the graph")
+    i.add_argument("--hooks", action="store_true", help="also install Claude Code hooks (edits, test runs)")
+    i.set_defaults(fn=cmd_init)
+    sub.add_parser("record", help="(hook) record one tool call from stdin").set_defaults(fn=cmd_record)
+    sub.add_parser("ingest", help="recover edits/test runs from session transcripts").set_defaults(fn=cmd_ingest)
     sub.add_parser("index", help="rebuild the code graph").set_defaults(fn=lambda _: print(graph.build(state.root())))
     sub.add_parser("serve", help="run the MCP server (stdio)").set_defaults(fn=lambda _: mcp_server.serve())
     n = sub.add_parser("note", help="record task state")

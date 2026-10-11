@@ -2,11 +2,11 @@
 import subprocess
 from pathlib import Path
 
-from . import graph, state
+from . import events, graph, state
 
 TITLES = [("constraint", "Constraints"), ("decision", "Decisions made"),
           ("rejected", "Rejected options (don't revisit without new info)"),
-          ("open", "Open questions"), ("next", "Next steps")]
+          ("hypothesis", "Hypotheses explored"), ("open", "Open questions")]
 
 
 def _git(*args) -> str:
@@ -30,6 +30,37 @@ def _changed_symbols(files) -> list:
     return out[:25]
 
 
+def _verified_work(s: dict) -> list:
+    """Facts captured from tool use (hooks/transcripts) and git, not from the model's own account."""
+    ev = events.summarize()
+    out = ["## Verified work (captured automatically)"]
+    base = s.get("base_sha")
+    commits = _git("log", "--oneline", f"{base}..HEAD") if base else ""
+    if commits:
+        out += ["Commits since the task started:", "```", *commits.splitlines()[:10], "```"]
+    if ev["edited"]:
+        out += ["Files edited: " + ", ".join(f"`{f}`" for f in ev["edited"][:15])]
+    tests = ev["tests"][-5:]
+    if tests:
+        out += ["Test runs (newest last):"]
+        out += [f"- {'PASS' if t['ok'] else 'FAIL'} `{t['cmd']}`" for t in tests]
+        failing = [t for t in tests if not t["ok"]]
+        if failing and not tests[-1]["ok"]:
+            out += ["Last failing output:", "```", failing[-1].get("summary", ""), "```"]
+        elif failing:
+            out += ["(the most recent run passed)"]
+    else:
+        out += ["No test runs recorded."]
+    errs = ev["errors"][-3:]
+    if errs:
+        last = [(e["summary"].splitlines() or [""])[-1][:160] for e in errs]
+        out += ["Failed commands:", *[f"- `{e['cmd']}`: {m}" for e, m in zip(errs, last)]]
+    if not ev["count"] and not commits:
+        out = ["## Verified work (captured automatically)",
+               "_nothing captured: hooks not installed and no transcript found (run `ctxrelay init --hooks`)_"]
+    return out + [""]
+
+
 def render() -> str:
     s = state.load()
     parts = ["# Handoff", "",
@@ -40,6 +71,10 @@ def render() -> str:
         parts.append(f"## {title}")
         parts += [f"{i}. {t}" for i, t in enumerate(s[kind], 1)] or ["_none recorded_"]
         parts.append("")
+    parts += _verified_work(s)
+    nxt = s["next"]
+    parts += ["## Exact next action", f"**{nxt[-1]}**" if nxt else "_not recorded_"]
+    parts += [f"Later: {t}" for t in nxt[:-1]] + [""]
     status = _git("status", "--short")
     parts += ["## Repository state", f"Branch: `{_git('rev-parse', '--abbrev-ref', 'HEAD') or 'n/a'}`", ""]
     parts += ["Recent commits:", "```", _git("log", "-5", "--oneline") or "(none)", "```", ""]

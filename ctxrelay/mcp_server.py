@@ -35,8 +35,8 @@ TOOLS = {
                     lambda a: graph.search(a["query"])),
     "graph_reindex": (_tool("graph_reindex", "Rebuild the code graph."), lambda a: graph.build(state.root())),
     "handoff_note": (_tool("handoff_note",
-                           "Record durable task state for a future model: goal, constraint, decision, rejected, open, "
-                           "next. "
+                           "Record durable task state for a future model: goal, constraint, decision, rejected, "
+                           "hypothesis, open, next (keep the last `next` an exact action). "
                            "Call this whenever you make a decision or rule something out.",
                            {"kind": {"type": "string", "enum": list(state.KINDS)}, "text": STR}, ["kind", "text"]),
                      lambda a: state.add_note(a["kind"], a["text"])),
