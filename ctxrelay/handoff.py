@@ -22,7 +22,7 @@ def _changed_symbols(files) -> list:
     con = graph.connect()
     out = []
     for f in files:
-        for name, kind, line, deps in con.execute(
+        for name, _kind, line, deps in con.execute(
                 """SELECT s.name,s.kind,s.line,(SELECT COUNT(*) FROM edges e WHERE e.dst=s.id)
                    FROM symbols s WHERE s.file=? ORDER BY s.line""", (f,)):
             if deps:
@@ -48,7 +48,7 @@ def render() -> str:
     if stat:
         parts += ["```", stat, "```"]
     parts.append("")
-    changed = [l[3:].split(" -> ")[-1] for l in status.splitlines()]
+    changed = [row[3:].split(" -> ")[-1] for row in status.splitlines()]
     risky = _changed_symbols(changed)
     if risky:
         parts += ["## Changed symbols other code depends on", *risky, ""]
@@ -56,8 +56,8 @@ def render() -> str:
         hubs = graph.hubs().splitlines()[:5]
         comms = graph.community().splitlines()[:5]
         parts += ["## Code map (from the index; heuristic, verify before relying on it)",
-                  "Most depended-on symbols:", *[f"- {l}" for l in hubs], "",
-                  "Largest file clusters:", *[f"- {l}" for l in comms], ""]
+                  "Most depended-on symbols:", *[f"- {row}" for row in hubs], "",
+                  "Largest file clusters:", *[f"- {row}" for row in comms], ""]
     parts += ["## Code graph",
               "If the `ctxrelay` MCP server is connected, use its `graph_*` tools (find, callers, callees, impact, "
               "community, hubs) instead of re-reading files. Otherwise run `ctxrelay q <command>`.", ""]

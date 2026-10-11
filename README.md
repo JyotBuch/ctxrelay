@@ -1,5 +1,7 @@
 # ctxrelay
 
+[![CI](https://github.com/JyotBuch/ctxrelay/actions/workflows/ci.yml/badge.svg)](https://github.com/JyotBuch/ctxrelay/actions/workflows/ci.yml)
+
 Keep your task and codebase context portable when you switch between coding-agent subscriptions
 (Claude Code, Codex CLI; Gemini CLI untested) because one hit its usage limit.
 
@@ -165,6 +167,12 @@ How to read this:
   untested, and the README commands for it come from its documented usage only.
 - `search` depends on colgrep, a young third-party tool; its numbers above are from one repo.
 - Notes are only as good as what gets recorded. If nothing is recorded, the handoff is just git state.
+
+## Development
+
+`make check` runs lint, types and tests. CI also tests on Linux and macOS, installs the built wheel, scans for
+secrets, and re-measures graph accuracy against `eval/thresholds.json`. See `CONTRIBUTING.md` for what each check
+guards and what to do when adding features.
 
 ## License
 

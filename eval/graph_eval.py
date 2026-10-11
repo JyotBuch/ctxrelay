@@ -13,13 +13,13 @@ import resource
 import subprocess
 import sys
 import time
-import tomllib
 from pathlib import Path
+
+import tomllib
 
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parent))
 from ctxrelay import graph, state  # noqa: E402
-
 
 NON_SOURCE_DIRS = {"test", "tests", "testing", "doc", "docs", "bench", "benchmarks", "scripts", "extra", "example",
                    "examples", "sample", "samples", "e2e", "integration", "fixtures", "scratch"}

@@ -22,8 +22,9 @@ REPO = (HERE / ".cache" / "pytest").resolve()
 SRC = REPO / "src"
 RES = HERE / "results"
 QUERIES = RES / "colgrep_queries.json"
-STOP = set("the a an of to in for and or with from that this is are be by on as at it its into when which not if "
-           "using use used given each any all can will should".split())
+STOP = set(
+    "the a an of to in for and or with from that this is are be by on as at it its into when which not if "
+    "using use used given each any all can will should".split())
 
 
 def src_files():
@@ -150,6 +151,7 @@ def prf(pred, truth):
 
 def structure():
     import sqlite3
+
     import jedi
     con = sqlite3.connect(REPO / ".ctxrelay" / "graph.db")
     rows = json.loads((RES / "graph_pytest.json").read_text())["rows"]

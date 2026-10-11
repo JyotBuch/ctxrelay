@@ -7,8 +7,6 @@ in more than MAX_AMBIGUOUS places are skipped to keep the noise down.
 """
 from __future__ import annotations
 
-from __future__ import annotations
-
 import ast
 import io
 import re
@@ -30,7 +28,8 @@ MAX_FILE_BYTES = 1_000_000
 DEF_RE = re.compile(
     r"^\s*(?:export\s+)?(?:default\s+)?(?:pub(?:\([^)]*\))?\s+)?(?:(?:public|private|protected|static|final|abstract|async|unsafe|extern)\s+)*"
     r"(function\*?|func|fn|def|class|struct|interface|enum|trait|type)\s+(?:\([^)]*\)\s*)?([A-Za-z_]\w*)")
-ARROW_RE = re.compile(r"^\s*(?:export\s+)?(?:const|let|var)\s+([A-Za-z_]\w*)\s*=\s*(?:async\s*)?(?:\([^)]*\)|[A-Za-z_]\w*)\s*=>")
+ARROW_RE = re.compile(
+    r"^\s*(?:export\s+)?(?:const|let|var)\s+([A-Za-z_]\w*)\s*=\s*(?:async\s*)?(?:\([^)]*\)|[A-Za-z_]\w*)\s*=>")
 TOKEN_RE = re.compile(r"(\.\s*)?([A-Za-z_]\w{2,})")
 # comments and string literals, matched leftmost-first so quotes inside comments (and vice versa) are skipped
 STRIP_RE = re.compile(r"//[^\n]*|/\*.*?\*/|\"(?:\\.|[^\"\\\n])*\"|'(?:\\.|[^'\\\n])*'|`(?:\\.|[^`\\])*`", re.S)
@@ -137,12 +136,14 @@ def build(root: Path) -> str:
         for name, kind, line, is_method in defs:
             cur = con.execute("INSERT INTO symbols(name,kind,file,line,method) VALUES (?,?,?,?,?)",
                               (name, kind, f, line, int(is_method)))
-            method_of[cur.lastrowid] = is_method
-            ids.append((line, cur.lastrowid))
-            by_name[name].append(cur.lastrowid)
+            sid = cur.lastrowid
+            assert sid is not None  # an INSERT always sets it
+            method_of[sid] = is_method
+            ids.append((line, sid))
+            by_name[name].append(sid)
         per_file[f] = ids
 
-    edges = set()
+    edges: set[tuple[int, int]] = set()
     for f, (defs, toks) in parsed.items():
         ids = per_file[f]
         starts = [d[0] for d in ids]
@@ -162,7 +163,7 @@ def build(root: Path) -> str:
 
     # communities: label propagation over the file-level graph
     file_of = dict(con.execute("SELECT id, file FROM symbols"))
-    nbrs = defaultdict(Counter)
+    nbrs: defaultdict[str, Counter[str]] = defaultdict(Counter)
     for s, d in edges:
         a, b = file_of[s], file_of[d]
         if a != b:
@@ -174,19 +175,20 @@ def build(root: Path) -> str:
         for f in sorted(parsed):
             if not nbrs[f]:
                 continue
-            score = Counter()
+            score: Counter[str] = Counter()
             for g, w in nbrs[f].items():
                 score[label[g]] += w
-            best = min(score, key=lambda l: (-score[l], l))
+            best = min(score, key=lambda lab: (-score[lab], lab))
             if best != label[f]:
                 label[f], changed = best, True
         if not changed:
             break
-    ids = {l: i for i, l in enumerate(sorted(set(label.values())), 1)}
-    con.executemany("UPDATE files SET community=? WHERE path=?", [(ids[label[f]], f) for f in parsed])
+    community_ids = {lab: i for i, lab in enumerate(sorted(set(label.values())), 1)}
+    con.executemany("UPDATE files SET community=? WHERE path=?", [(community_ids[label[f]], f) for f in parsed])
     con.commit()
     con.close()
-    return f"indexed {len(parsed)} files, {len(file_of)} symbols, {len(edges)} edges, {len(set(label.values()))} communities"
+    return (f"indexed {len(parsed)} files, {len(file_of)} symbols, {len(edges)} edges, "
+            f"{len(set(label.values()))} communities")
 
 
 # ---- queries (all output is capped so results stay cheap in tokens) ----
@@ -203,7 +205,7 @@ def _fmt(rows, empty="(none)"):
     if not rows:
         return empty
     extra = f"\n… {len(rows) - LIMIT} more" if len(rows) > LIMIT else ""
-    return "\n".join(f"{n} [{k}] {f}:{l}" for n, k, f, l in rows[:LIMIT]) + extra
+    return "\n".join(f"{n} [{k}] {f}:{line}" for n, k, f, line in rows[:LIMIT]) + extra
 
 
 def find(name: str) -> str:
@@ -241,14 +243,18 @@ def community(num: int | None = None) -> str:
     _need_db()
     con = connect()
     if num is None:
-        rows = con.execute("SELECT community, COUNT(*), MIN(path) FROM files GROUP BY community ORDER BY 2 DESC").fetchall()
+        rows = con.execute(
+            "SELECT community, COUNT(*), MIN(path) FROM files GROUP BY community ORDER BY 2 DESC").fetchall()
         out = []
         for c, n, _ in rows[:LIMIT]:
-            dirs = Counter(str(Path(p).parent) for (p,) in con.execute("SELECT path FROM files WHERE community=?", (c,)))
+            paths = con.execute("SELECT path FROM files WHERE community=?", (c,))
+            dirs = Counter(str(Path(p).parent) for (p,) in paths)
             out.append(f"community {c}: {n} files, mostly {dirs.most_common(1)[0][0]}/")
         return "\n".join(out) or "(empty)"
     files = [p for (p,) in con.execute("SELECT path FROM files WHERE community=? ORDER BY path", (num,))]
-    return "\n".join(files[:LIMIT]) + (f"\n… {len(files) - LIMIT} more" if len(files) > LIMIT else "") if files else "(none)"
+    if not files:
+        return "(none)"
+    return "\n".join(files[:LIMIT]) + (f"\n… {len(files) - LIMIT} more" if len(files) > LIMIT else "")
 
 
 def hubs() -> str:
@@ -257,7 +263,7 @@ def hubs() -> str:
     rows = connect().execute(
         """SELECT s.name,s.kind,s.file,s.line,COUNT(*) c FROM edges e JOIN symbols s ON s.id=e.dst
            GROUP BY s.id ORDER BY c DESC LIMIT ?""", (LIMIT,)).fetchall()
-    return "\n".join(f"{n} [{k}] {f}:{l}  ← {c} dependents" for n, k, f, l, c in rows) or "(none)"
+    return "\n".join(f"{n} [{k}] {f}:{line}  ← {c} dependents" for n, k, f, line, c in rows) or "(none)"
 
 
 def file_summary(path: str) -> str:
@@ -277,7 +283,11 @@ def search(query: str, k: int = 10) -> str:
     out = subprocess.run([exe, "-k", str(k), query], cwd=state.root(), capture_output=True, text=True)
     if out.returncode:
         err = out.stderr.strip()[-300:]
-        hint = " A stale Hugging Face token can cause this: retry with HF_HOME set to an empty directory." if "401" in out.stderr else ""
+        hint = ""
+        if "401" in out.stderr:
+            hint = " A stale Hugging Face token can cause this: retry with HF_HOME set to an empty directory."
         raise RuntimeError(f"colgrep failed: {err}{hint}")
     lines = out.stdout.strip().splitlines()
-    return "\n".join(lines[:LIMIT]) + (f"\n… {len(lines) - LIMIT} more" if len(lines) > LIMIT else "") if lines else "(no results)"
+    if not lines:
+        return "(no results)"
+    return "\n".join(lines[:LIMIT]) + (f"\n… {len(lines) - LIMIT} more" if len(lines) > LIMIT else "")

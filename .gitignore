@@ -7,3 +7,7 @@ eval/.cache/
 eval/results/*.db
 eval/results/e2e/*.jsonl
 .pytest_cache/
+eval/node_modules/
+eval/package*.json
+dist/
+.coverage

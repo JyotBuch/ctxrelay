@@ -1,0 +1,5 @@
+{
+  "_comment": "Floors for the eval-regression workflow, set a little below the measured v3 results (pytest P0.76 R0.92 F1-unambiguous 0.91; nest P0.60 R0.95 F1-unambiguous 0.68). Raise them when the graph improves; lowering one needs an explanation in the PR.",
+  "pytest": {"recall_min": 0.88, "precision_min": 0.70, "f1_unambiguous_min": 0.85, "build_seconds_max": 30},
+  "nest":   {"recall_min": 0.90, "precision_min": 0.52, "f1_unambiguous_min": 0.60, "build_seconds_max": 30}
+}
