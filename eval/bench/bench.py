@@ -27,7 +27,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 TASKS = HERE / "tasks"
-OUT = HERE.parents[0] / "results" / "bench"
+OUT = Path(os.environ.get("BENCH_OUT", HERE.parents[0] / "results" / "bench"))
 WORK = Path(os.environ.get("BENCH_WORK", HERE.parents[0] / ".cache" / "bench"))
 BIN = Path(sys.executable).parent
 CONDS = ("C0", "C1", "C2", "C3", "C4")
