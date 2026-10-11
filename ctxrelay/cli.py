@@ -6,7 +6,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from . import events, graph, handoff, mcp_server, state, switch, ui
+from . import doctor, events, graph, handoff, mcp_server, state, switch, ui
 
 MARK_START, MARK_END = "<!-- ctxrelay:start -->", "<!-- ctxrelay:end -->"
 RULES = f"""{MARK_START}
@@ -57,6 +57,13 @@ def _install_hooks(settings: Path) -> None:
     settings.write_text(json.dumps(data, indent=2) + "\n")
 
 
+def cmd_doctor(_):
+    rows = doctor.diagnose(state.root())
+    print(doctor.render(rows))
+    if any(k == "bad" for k, _, _ in rows):
+        sys.exit(1)
+
+
 def cmd_record(_):
     with contextlib.suppress(Exception):  # a capture hook must never break the session
         events.record_hook(json.load(sys.stdin))
@@ -64,6 +71,15 @@ def cmd_record(_):
 
 def cmd_ingest(_):
     print(f"recovered {events.ingest()} event(s) from session transcripts")
+
+
+def _gitignore(path: Path) -> bool:
+    """Keep .ctxrelay/ (it holds command output) out of commits. Returns True if the file was changed."""
+    text = path.read_text() if path.exists() else ""
+    if any(line.strip().rstrip("/") == ".ctxrelay" for line in text.splitlines()):
+        return False
+    path.write_text(text.rstrip("\n") + ("\n" if text.strip() else "") + ".ctxrelay/\n")
+    return True
 
 
 def cmd_init(a):
@@ -77,6 +93,8 @@ def cmd_init(a):
     state.home()
     state.ensure_base()
     print(ui.banner("setting up this project"))
+    if Path(".git").exists() and _gitignore(Path(".gitignore")):
+        print(ui.line("ok", ".ctxrelay/ added to .gitignore"))
     print(ui.line("ok", "agent rules written", "AGENTS.md (CLAUDE.md and GEMINI.md import it)"))
     if a.hooks:
         _install_hooks(Path(".claude") / "settings.json")
@@ -145,6 +163,7 @@ def build_parser() -> argparse.ArgumentParser:
     i.set_defaults(fn=cmd_init)
     sub.add_parser("status", help="show what the next switch would carry").set_defaults(
         fn=lambda _: print(ui.status_screen(state.root())))
+    sub.add_parser("doctor", help="check the setup and print exact fixes").set_defaults(fn=cmd_doctor)
     sub.add_parser("record", help="(hook) record one tool call from stdin").set_defaults(fn=cmd_record)
     sub.add_parser("ingest", help="recover edits/test runs from session transcripts").set_defaults(fn=cmd_ingest)
     sub.add_parser("index", help="rebuild the code graph").set_defaults(fn=lambda _: print(graph.build(state.root())))
