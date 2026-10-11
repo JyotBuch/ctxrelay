@@ -44,7 +44,7 @@ jobs:
           python eval/graph_eval.py nest --n 60
       - name: Check against thresholds
         run: python eval/check_thresholds.py pytest nest | tee -a "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: graph-eval-results
