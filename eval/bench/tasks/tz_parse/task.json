@@ -1,0 +1,36 @@
+{
+  "statement": "events.api.handle must accept ISO-8601 timestamps with a UTC offset such as '2024-01-02T03:04:05+02:00' and return them as UTC isoformat ('2024-01-02T01:04:05+00:00'). Existing inputs must keep working.",
+  "notes": {
+    "goal": "events.api.handle accepts ISO-8601 with offset and returns UTC isoformat; legacy 'YYYY-MM-DD HH:MM:SS' inputs keep working.",
+    "constraint": [
+      "parse_ts must keep returning a naive datetime: other teams import it and legacy_age_seconds subtracts a naive `now`.",
+      "export_row output must not change."
+    ],
+    "decision": [
+      "Add a separate parse_ts_aware (stubbed in events/timeparse.py) and use it only from events.api.handle for the new format."
+    ],
+    "rejected": [
+      "Changing parse_ts to return aware datetimes: breaks legacy_age_seconds (naive minus aware raises TypeError) and every external caller."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "Implement parse_ts_aware in events/timeparse.py (fromisoformat + astimezone(utc)); call it from events/api.py when the input contains 'T'."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "events/timeparse.py"
+    },
+    {
+      "kind": "test",
+      "cmd": "python -m pytest -q",
+      "ok": true,
+      "summary": "1 passed"
+    }
+  ],
+  "summary": "The previous session found parse_ts is imported by other teams and by legacy_age_seconds, which subtracts a naive datetime, so parse_ts must keep returning naive datetimes (making it aware raises TypeError). The plan: add parse_ts_aware (stubbed in events/timeparse.py, raising NotImplementedError) and route only the new ISO-with-offset format in events/api.py through it; export_row must not change.",
+  "visible_tests": "python -m pytest -q tests",
+  "hidden_tests": "python -m pytest -q hidden/test_hidden.py"
+}

@@ -1,0 +1,35 @@
+{
+  "statement": "Add caching to `price_with_tax` in shop/pricing.py so that a repeated identical call does not recompute (`CALLS['n']` must not increase on the repeat).",
+  "notes": {
+    "goal": "Cache price_with_tax so repeated identical calls don't recompute (CALLS['n'] unchanged on a repeat).",
+    "constraint": [
+      "User requirement: never serve a stale price after catalog.update()."
+    ],
+    "decision": [
+      "Catalog.version is bumped on every update() (already done in shop/catalog.py); key the cache on it."
+    ],
+    "rejected": [
+      "functools.lru_cache on price_with_tax: Catalog is mutated in place, so the cache returns stale prices after update()."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "In shop/pricing.py, cache price_with_tax with a key including id(catalog) and catalog.version; keep CALLS counting real computations."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "shop/catalog.py"
+    },
+    {
+      "kind": "test",
+      "cmd": "python -m pytest -q",
+      "ok": true,
+      "summary": "1 passed"
+    }
+  ],
+  "summary": "The previous session wanted caching for price_with_tax. It found that functools.lru_cache would serve stale prices because Catalog is mutated in place by update(), so it added a `version` counter that update() bumps (shop/catalog.py). The user requires that prices are never stale after update(). The cache itself is not written yet: key it on id(catalog), catalog.version, sku and rate.",
+  "visible_tests": "python -m pytest -q tests",
+  "hidden_tests": "python -m pytest -q hidden/test_hidden.py"
+}

@@ -1,0 +1,36 @@
+{
+  "statement": "Rename the field `user_id` to `account_id` in the public API (the JSON that app/api.py returns and the requests it parses).",
+  "notes": {
+    "goal": "Public API uses `account_id` instead of `user_id` (JSON output and request parsing).",
+    "constraint": [
+      "The DB column stays `user_id`: migrations/001_init.sql is frozen and a column rename needs a separate migration (out of scope).",
+      "Requests must keep accepting the legacy `user_id` key for one release (user requirement)."
+    ],
+    "decision": [
+      "Only app/api.py and its consumers change; app/models.py and migrations/ are not touched."
+    ],
+    "rejected": [
+      "Global search-and-replace of user_id: it rewrites the SQL in models.py and the frozen migration."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "app/api.py user_json is already renamed; fix app/report.py (still reads 'user_id') and make parse_request accept account_id or legacy user_id."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "app/api.py"
+    },
+    {
+      "kind": "test",
+      "cmd": "python -m pytest -q",
+      "ok": false,
+      "summary": "KeyError: 'user_id' in app/report.py summary"
+    }
+  ],
+  "summary": "The previous session started renaming user_id to account_id in the public API only. app/api.py's user_json is done and now breaks app/report.py (KeyError: 'user_id'). It decided not to touch the DB: the column stays user_id because migrations/001_init.sql is frozen, and a global search-and-replace was rejected for that reason. The user also requires parse_request to keep accepting the legacy user_id key.",
+  "visible_tests": "python -m pytest -q tests",
+  "hidden_tests": "python -m pytest -q hidden/test_hidden.py"
+}

@@ -13,3 +13,4 @@ dist/
 .coverage
 CLAUDE.md
 .venv/
+eval/results/bench/*.raw
