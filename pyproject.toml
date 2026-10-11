@@ -5,10 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "ctxrelay"
 version = "0.1.0"
-description = "Keep coding-agent context portable across Claude Code, Codex and Gemini CLI subscriptions."
+description = "Keep coding-agent context portable across Claude Code and Codex subscriptions."
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.9"
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/JyotBuch/ctxrelay"
 
 [project.scripts]
 ctxrelay = "ctxrelay.cli:main"

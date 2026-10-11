@@ -20,6 +20,7 @@ unclear. You stay in the official CLIs and ctxrelay only hands context across.
 ## Install
 
 ```sh
+git clone https://github.com/JyotBuch/ctxrelay && cd ctxrelay
 pip install -e .        # Python 3.9+, no dependencies
 ```
 
@@ -164,3 +165,7 @@ How to read this:
   untested, and the README commands for it come from its documented usage only.
 - `search` depends on colgrep, a young third-party tool; its numbers above are from one repo.
 - Notes are only as good as what gets recorded. If nothing is recorded, the handoff is just git state.
+
+## License
+
+MIT. See `LICENSE`.
