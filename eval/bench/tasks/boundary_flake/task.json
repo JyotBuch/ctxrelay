@@ -1,0 +1,35 @@
+{
+  "statement": "tests/test_expiry.py::test_token_expires fails intermittently. Make it pass reliably by fixing the underlying problem.",
+  "notes": {
+    "goal": "Make tests/test_expiry.py::test_token_expires pass reliably (fix the root cause).",
+    "constraint": [
+      "No retry/skip/sleep workarounds in the tests: the user wants the root cause fixed."
+    ],
+    "decision": [],
+    "rejected": [
+      "Retrying the test (a @retry decorator was added to the test file): it only masks the bug; remove it."
+    ],
+    "hypothesis": [
+      "Root cause confirmed: is_expired truncates `now` and `issued_at` to ints separately, so when the fractional parts straddle a second boundary the elapsed time is under-counted (e.g. issued 100.9, now 110.95 -> 10, not > 10)."
+    ],
+    "open": [],
+    "next": [
+      "Change syncer/expiry.py is_expired to compare `now - issued_at > ttl` on the floats, and delete the retry decorator from tests/test_expiry.py."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "tests/test_expiry.py"
+    },
+    {
+      "kind": "test",
+      "cmd": "python -m pytest -q",
+      "ok": false,
+      "summary": "1 failed (intermittent)"
+    }
+  ],
+  "summary": "The previous session traced the flaky test to is_expired in syncer/expiry.py: it truncates now and issued_at to ints separately, so elapsed time is under-counted when the fractional parts straddle a second boundary. It tried wrapping the test in a retry decorator (now in tests/test_expiry.py) but the user rejected retries as masking the bug. Fix: compare floats directly and remove the decorator.",
+  "visible_tests": "python -m pytest -q tests",
+  "hidden_tests": "python -m pytest -q hidden/test_hidden.py"
+}
