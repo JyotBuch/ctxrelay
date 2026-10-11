@@ -1,0 +1,18 @@
+{
+ "task": "big_move_isclass",
+ "cond": "C2",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 27.8,
+ "tool_calls": 6,
+ "mcp_calls": 0,
+ "input_tokens": 86897,
+ "cached_tokens": 71552,
+ "uncached_tokens": 15345,
+ "output_tokens": 792,
+ "success": false,
+ "hidden_pass": false,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "1 failed, 2 passed in 0.07s"
+}

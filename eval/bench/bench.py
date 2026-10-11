@@ -27,7 +27,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 TASKS = HERE / "tasks"
-OUT = HERE.parents[0] / "results" / "bench"
+OUT = Path(os.environ.get("BENCH_OUT", HERE.parents[0] / "results" / "bench"))
 WORK = Path(os.environ.get("BENCH_WORK", HERE.parents[0] / ".cache" / "bench"))
 BIN = Path(sys.executable).parent
 CONDS = ("C0", "C1", "C2", "C3", "C4")
@@ -60,11 +60,16 @@ def make_work(task: str, cond: str, tag: str) -> Path:
     w = WORK / f"{task}_{cond}_{tag}"
     if w.exists():
         shutil.rmtree(w)
-    w.mkdir(parents=True)
-    overlay(task, "base", w)
-    sh(["git", "init", "-q"], w)
-    sh([*GIT, "add", "-A"], w)
-    sh([*GIT, "commit", "-q", "-m", "base"], w)
+    repo = load(task).get("repo")
+    if repo:  # a real pinned checkout from eval/.cache (see eval/fetch.sh), already a clean git repo
+        shutil.copytree(HERE.parents[0] / ".cache" / repo, w, symlinks=True,
+                        ignore=shutil.ignore_patterns(".ctxrelay", "__pycache__", ".pytest_cache"))
+    else:
+        w.mkdir(parents=True)
+        overlay(task, "base", w)
+        sh(["git", "init", "-q"], w)
+        sh([*GIT, "add", "-A"], w)
+        sh([*GIT, "commit", "-q", "-m", "base"], w)
     overlay(task, "interrupted", w)  # partial work stays uncommitted
     return w
 
@@ -78,8 +83,9 @@ def naive_handoff(t: dict, w: Path) -> str:
 def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
     """Prepare the working tree for a condition; returns (prompt, extra codex -c args)."""
     t = load(task)
+    hint = t.get("run_hint", "python -m pytest -q tests")
     base = ("A previous session may have started this task and been interrupted, so the repository may contain partial "
-            "work. Finish the task. Run `python -m pytest -q tests` when done.\n\nTask: " + t["statement"])
+            f"work. Finish the task. Run `{hint}` when done.\n\nTask: " + t["statement"])
     if cond == "C0":
         return base, []
     if cond == "C1":
@@ -88,7 +94,7 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
     if cond == "C2":
         (w / "HANDOFF.md").write_text(naive_handoff(t, w))
         return ("You are continuing a task another session started. Read HANDOFF.md first, check it against the code, then "
-                "finish the task. Run `python -m pytest -q tests` when done.\n\nTask: " + t["statement"]), []
+                f"finish the task. Run `{hint}` when done.\n\nTask: " + t["statement"]), []
     # C3: real ctxrelay state, as the hooks and notes would have left it
     from ctxrelay import state
     cwd = os.getcwd()
@@ -108,7 +114,7 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
         sh(["ctxrelay", "switch", "print"], w)
         return ("You are continuing a task started in another session, possibly with a different model. Read "
                 ".ctxrelay/HANDOFF.md first, check it against the actual code, then continue from 'Exact next action'. "
-                "Finish the task. Run `python -m pytest -q tests` when done."), []
+                f"Finish the task. Run `{hint}` when done."), []
     sh(["ctxrelay", "init"], w)
     sh(["ctxrelay", "switch", "print"], w)
     (w / "mcp.json").write_text(json.dumps({"mcpServers": {"ctxrelay": {"command": str(BIN / "ctxrelay"), "args": ["serve"]}}}))
@@ -116,16 +122,20 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
            "-c", 'mcp_servers.ctxrelay.default_tools_approval_mode="approve"']
     return ("You are continuing a task started in another session, possibly with a different model. Read "
             ".ctxrelay/HANDOFF.md first, check it against the actual code, then continue from 'Exact next action'. "
-            "Finish the task. Run `python -m pytest -q tests` when done."), cfg
+            f"Finish the task. Run `{hint}` when done."), cfg
 
 
 def check(task: str, w: Path) -> dict:
     solution = set(overlay_names(task, "solution"))
     shutil.rmtree(w / "hidden", ignore_errors=True)
     overlay_hidden(task, w)
-    env = {"PYTHONPATH": str(w)}
-    hidden = sh([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "hidden"], w, env=env)
-    visible = sh([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests"], w, env=env)
+    t = load(task)
+    big = bool(t.get("repo"))
+    env = {"PYTHONPATH": f"{w / 'src'}:{w}" if big else str(w)}
+    isolate = ["-c", os.devnull, "--rootdir", str(w / "hidden"), "--noconftest"] if big else []
+    hidden = sh([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *isolate, "hidden"], w, 600, env=env)
+    visible = sh([sys.executable, "-m", "pytest", "-p", "no:cacheprovider", *t.get("visible_args", ["tests", "-q"])],
+                 w, 900, env=env)
     shutil.rmtree(w / "hidden", ignore_errors=True)
     changed = sorted(line[3:] for line in sh(["git", "status", "--porcelain", "-uall"], w).stdout.splitlines()
                      if not any(n in line[3:] for n in NOISE))
@@ -168,6 +178,26 @@ def parse_claude(out: str) -> dict:
             "output_tokens": u.get("output_tokens") or 0, "cost_usd": d.get("total_cost_usd")}
 
 
+def invalid_reason(agent: str, raw: str) -> str:
+    """Why a run says nothing about the handoff (agent crashed, rate limit, auth). Empty string = a real attempt."""
+    if agent == "codex":
+        for line in raw.splitlines():
+            if line.startswith("{"):
+                e = json.loads(line)
+                if e.get("type") in ("error", "turn.failed"):
+                    msg = e.get("message") or (e.get("error") or {}).get("message", "")
+                    if msg:
+                        return msg[:200]
+        return "" if raw.strip() else "no output"
+    if agent == "claude":
+        try:
+            d = json.loads(raw)
+        except json.JSONDecodeError:
+            return "unparseable output"
+        return str(d.get("result", ""))[:200] if d.get("is_error") else ""
+    return ""
+
+
 def run_agent(agent: str, prompt: str, cfg: list[str], w: Path, task: str, stub_layer: str) -> tuple[dict, str]:
     if agent == "stub":
         overlay(task, stub_layer, w)
@@ -193,6 +223,9 @@ def run_one(agent, task, cond, rep, stub_layer="solution") -> dict:
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / f"{task}_{cond}_{agent}{rep}.raw").write_text(raw)
     res = {"task": task, "cond": cond, "agent": agent, "rep": rep, "wall_s": wall, **metrics, **check(task, w)}
+    bad = invalid_reason(agent, raw)
+    if bad:
+        res["invalid"] = bad  # excluded from every summary; never counts as a handoff failure
     (OUT / f"{task}_{cond}_{agent}{rep}.json").write_text(json.dumps(res, indent=1))
     return res
 
@@ -217,6 +250,8 @@ def validate() -> list[str]:
 
 
 def summarize(rows: list[dict]) -> str:
+    skipped = sum(1 for r in rows if r.get("invalid"))
+    rows = [r for r in rows if not r.get("invalid")]
     keys = sorted({(r["task"], r["cond"]) for r in rows})
     out = ["task | cond | n | success | median wall s | median tool calls | median uncached tok | regressions"]
     for task, cond in keys:
@@ -227,6 +262,8 @@ def summarize(rows: list[dict]) -> str:
             return round(statistics.median(v), 1) if v else "-"
         out.append(f"{task} | {cond} | {len(g)} | {sum(r['success'] for r in g)}/{len(g)} | {med('wall_s')} | "
                    f"{med('tool_calls')} | {med('uncached_tokens')} | {sum(r['regression'] for r in g)}")
+    if skipped:
+        out.append(f"({skipped} invalid run(s) excluded: agent error or usage limit)")
     return "\n".join(out)
 
 
@@ -237,6 +274,7 @@ def main(argv=None) -> int:
     ap.add_argument("--tasks", default="")
     ap.add_argument("--conds", default=",".join(CONDS))
     ap.add_argument("--reps", type=int, default=1)
+    ap.add_argument("--resume", action="store_true", help="skip cells that already have a valid result in BENCH_OUT")
     a = ap.parse_args(argv)
     if a.validate:
         problems = validate()
@@ -247,8 +285,17 @@ def main(argv=None) -> int:
     for name in names:
         for cond in a.conds.split(","):
             for rep in range(a.reps):
+                done = OUT / f"{name}_{cond}_{a.agent}{rep}.json"
+                if a.resume and done.exists() and not json.loads(done.read_text()).get("invalid"):
+                    rows.append(json.loads(done.read_text()))
+                    continue
                 r = run_one(a.agent, name, cond, rep)
                 rows.append(r)
+                if r.get("invalid"):
+                    print(f"{name} {cond} rep{rep}: INVALID ({r['invalid']}); stopping so no more runs are wasted. "
+                          "Re-run later with --resume.", flush=True)
+                    print("\n" + summarize(rows))
+                    return 2
                 print(f"{name} {cond} rep{rep}: success={r['success']} wall={r['wall_s']}s tools={r.get('tool_calls')} "
                       f"uncached={r.get('uncached_tokens')}", flush=True)
     print("\n" + summarize(rows))

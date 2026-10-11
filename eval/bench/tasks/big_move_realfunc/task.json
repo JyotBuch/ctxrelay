@@ -1,0 +1,41 @@
+{
+  "repo": "pytest",
+  "statement": "Move the function `get_real_func` out of src/_pytest/compat.py into a new module src/_pytest/_realfunc.py. Don't change behavior.",
+  "notes": {
+    "goal": "Move get_real_func from src/_pytest/compat.py to a new module src/_pytest/_realfunc.py without changing behavior.",
+    "constraint": [
+      "User requirement: every importer in src/ and testing/ must import get_real_func directly from _pytest._realfunc, not via _pytest.compat (compat may import it for its own use only)."
+    ],
+    "decision": [
+      "compat.py imports get_real_func from the new module for its own getlocation(); no copy is left behind."
+    ],
+    "rejected": [
+      "Leaving the other files importing it through compat: it works, but the user wants compat decoupled."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "Change the imports in src/_pytest/fixtures.py, src/_pytest/_code/code.py and testing/test_compat.py to `from _pytest._realfunc import get_real_func` (python.py is already done)."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "src/_pytest/_realfunc.py"
+    },
+    {
+      "kind": "edit",
+      "file": "src/_pytest/compat.py"
+    },
+    {
+      "kind": "edit",
+      "file": "src/_pytest/python.py"
+    }
+  ],
+  "summary": "The previous session created src/_pytest/_realfunc.py with get_real_func, made compat.py import it for its own getlocation(), and updated src/_pytest/python.py. The user requires every importer in src/ and testing/ to import it directly from _pytest._realfunc rather than through compat. Still to change: src/_pytest/fixtures.py, src/_pytest/_code/code.py, testing/test_compat.py.",
+  "visible_args": [
+    "testing/test_compat.py",
+    "-q"
+  ],
+  "run_hint": "python -m pytest -q testing/test_compat.py"
+}

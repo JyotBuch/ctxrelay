@@ -1,0 +1,18 @@
+{
+ "task": "big_move_realfunc",
+ "cond": "C3",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 35.5,
+ "tool_calls": 8,
+ "mcp_calls": 1,
+ "input_tokens": 109991,
+ "cached_tokens": 80896,
+ "uncached_tokens": 29095,
+ "output_tokens": 977,
+ "success": true,
+ "hidden_pass": true,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "3 passed in 0.25s"
+}
