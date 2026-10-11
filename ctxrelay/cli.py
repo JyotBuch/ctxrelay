@@ -6,7 +6,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from . import events, graph, handoff, mcp_server, state
+from . import events, graph, handoff, mcp_server, state, switch
 
 MARK_START, MARK_END = "<!-- ctxrelay:start -->", "<!-- ctxrelay:end -->"
 RULES = f"""{MARK_START}
@@ -86,17 +86,29 @@ def cmd_init(a):
 
 
 def cmd_switch(a):
-    events.ingest()  # recover anything the hooks missed (e.g. Codex sessions)
-    path = handoff.write()
     if a.print_only or a.target == "print":
-        print(path.read_text())
+        events.ingest()
+        print(handoff.write().read_text())
         return
     argv = CLIS[a.target](PROMPT)
-    if not shutil.which(argv[0]):
-        sys.exit(f"{argv[0]} not found on PATH. Handoff is at {path}; start it manually and say: {PROMPT}")
-    if a.reindex:
-        print(graph.build(state.root()))
-    print(f"Handoff written to {path}; launching {a.target}…")
+    fatal, warns = switch.check_destination(a.target, shutil.which)
+    if fatal and not a.dry_run:
+        sys.exit(f"{fatal}. Handoff not launched; `ctxrelay switch print` shows it, or install {a.target} and retry.")
+    print("graph:", graph.refresh(state.root()))  # unchanged files are not re-parsed
+    print(f"transcripts: recovered {events.ingest()} new event(s)")
+    path = handoff.write()
+    problems = switch.verify(state.load(), state.root())
+    print(switch.summary(state.load()))
+    for w in [fatal, *warns]:
+        if w:
+            print("warning:", w)
+    for m in problems:
+        print("missing:", m)
+    print(f"handoff: {path} ({len(path.read_text().splitlines())} lines)")
+    if a.dry_run:
+        print("dry run: not launching")
+        return
+    print(f"launching {a.target}…")
     os.execvp(argv[0], argv)
 
 
@@ -138,7 +150,8 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("handoff", help="print the handoff").set_defaults(fn=lambda _: print(handoff.render()))
     s = sub.add_parser("switch", help="write the handoff and launch another CLI")
     s.add_argument("target", choices=[*CLIS, "print"])
-    s.add_argument("--reindex", action="store_true", help="refresh the graph first")
+    s.add_argument("--reindex", action="store_true", help="(deprecated: the graph is always refreshed)")
+    s.add_argument("--dry-run", action="store_true", help="run all checks and write the handoff, don't launch")
     s.add_argument("--print-only", action="store_true")
     s.set_defaults(fn=cmd_switch)
     q = sub.add_parser("q", help="query the code graph")
