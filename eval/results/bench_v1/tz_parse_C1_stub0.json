@@ -1,0 +1,12 @@
+{
+ "task": "tz_parse",
+ "cond": "C1",
+ "agent": "stub",
+ "rep": 0,
+ "wall_s": 0.0,
+ "success": true,
+ "hidden_pass": true,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "....                                                                     [100%]"
+}

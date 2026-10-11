@@ -1,0 +1,34 @@
+boundary_flake C0 rep0: success=False wall=28.2s tools=5 uncached=5103
+boundary_flake C1 rep0: success=False wall=28.2s tools=5 uncached=4815
+boundary_flake C2 rep0: success=True wall=30.3s tools=7 uncached=4964
+boundary_flake C3 rep0: success=True wall=33.2s tools=8 uncached=14078
+rename_field C0 rep0: success=False wall=27.0s tools=4 uncached=4001
+rename_field C1 rep0: success=False wall=22.0s tools=5 uncached=4539
+rename_field C2 rep0: success=True wall=26.0s tools=7 uncached=4622
+rename_field C3 rep0: success=True wall=32.3s tools=10 uncached=26510
+stale_cache C0 rep0: success=True wall=26.3s tools=4 uncached=7061
+stale_cache C1 rep0: success=True wall=25.9s tools=5 uncached=4579
+stale_cache C2 rep0: success=True wall=30.9s tools=7 uncached=7323
+stale_cache C3 rep0: success=True wall=43.7s tools=9 uncached=7308
+tz_parse C0 rep0: success=True wall=28.6s tools=6 uncached=7896
+tz_parse C1 rep0: success=True wall=28.9s tools=4 uncached=4700
+tz_parse C2 rep0: success=True wall=33.8s tools=7 uncached=8149
+tz_parse C3 rep0: success=True wall=41.9s tools=11 uncached=8610
+
+task | cond | n | success | median wall s | median tool calls | median uncached tok | regressions
+boundary_flake | C0 | 1 | 0/1 | 28.2 | 5 | 5103 | 0
+boundary_flake | C1 | 1 | 0/1 | 28.2 | 5 | 4815 | 0
+boundary_flake | C2 | 1 | 1/1 | 30.3 | 7 | 4964 | 0
+boundary_flake | C3 | 1 | 1/1 | 33.2 | 8 | 14078 | 0
+rename_field | C0 | 1 | 0/1 | 27.0 | 4 | 4001 | 0
+rename_field | C1 | 1 | 0/1 | 22.0 | 5 | 4539 | 0
+rename_field | C2 | 1 | 1/1 | 26.0 | 7 | 4622 | 0
+rename_field | C3 | 1 | 1/1 | 32.3 | 10 | 26510 | 0
+stale_cache | C0 | 1 | 1/1 | 26.3 | 4 | 7061 | 0
+stale_cache | C1 | 1 | 1/1 | 25.9 | 5 | 4579 | 0
+stale_cache | C2 | 1 | 1/1 | 30.9 | 7 | 7323 | 0
+stale_cache | C3 | 1 | 1/1 | 43.7 | 9 | 7308 | 0
+tz_parse | C0 | 1 | 1/1 | 28.6 | 6 | 7896 | 0
+tz_parse | C1 | 1 | 1/1 | 28.9 | 4 | 4700 | 0
+tz_parse | C2 | 1 | 1/1 | 33.8 | 7 | 8149 | 0
+tz_parse | C3 | 1 | 1/1 | 41.9 | 11 | 8610 | 0

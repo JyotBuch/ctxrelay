@@ -1,0 +1,18 @@
+{
+ "task": "boundary_flake",
+ "cond": "C0",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 28.2,
+ "tool_calls": 5,
+ "mcp_calls": 0,
+ "input_tokens": 62959,
+ "cached_tokens": 57856,
+ "uncached_tokens": 5103,
+ "output_tokens": 845,
+ "success": false,
+ "hidden_pass": false,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "FAILED hidden/test_hidden.py::test_fraction_boundaries - assert not True"
+}

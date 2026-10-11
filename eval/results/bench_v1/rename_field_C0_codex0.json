@@ -1,0 +1,18 @@
+{
+ "task": "rename_field",
+ "cond": "C0",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 27.0,
+ "tool_calls": 4,
+ "mcp_calls": 0,
+ "input_tokens": 60577,
+ "cached_tokens": 56576,
+ "uncached_tokens": 4001,
+ "output_tokens": 487,
+ "success": false,
+ "hidden_pass": false,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "FAILED hidden/test_hidden.py::test_request_accepts_both_names - KeyError: 'ac..."
+}

@@ -1,0 +1,18 @@
+{
+ "task": "stale_cache",
+ "cond": "C3",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 43.7,
+ "tool_calls": 9,
+ "mcp_calls": 3,
+ "input_tokens": 102028,
+ "cached_tokens": 94720,
+ "uncached_tokens": 7308,
+ "output_tokens": 1478,
+ "success": true,
+ "hidden_pass": true,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "...                                                                      [100%]"
+}
