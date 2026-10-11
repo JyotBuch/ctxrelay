@@ -1,0 +1,24 @@
+name: My switch didn't work
+description: You switched between Claude Code and Codex and the new session lost context or failed to start
+labels: [bug, switch]
+body:
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `ctxrelay doctor`
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Which direction (Claude to Codex or back), what the new session did, what it was missing
+    validations:
+      required: true
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Relevant part of .ctxrelay/HANDOFF.md
+      description: Remove anything private. The goal, next action and "Verified work" sections are the useful ones.
+      render: markdown

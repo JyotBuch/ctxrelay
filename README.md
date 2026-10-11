@@ -5,6 +5,10 @@
 Keep your task and codebase context portable when you switch between coding-agent subscriptions
 (Claude Code, Codex CLI; Gemini CLI untested) because one hit its usage limit.
 
+**Status: an experiment.** The evidence so far says the *information* in a handoff helps (see
+[Does it help?](#does-it-help-the-handoff-benchmark)); it does not yet show that ctxrelay's graph or MCP tools help
+beyond a plain written summary. If you try it, `ctxrelay doctor` shows your setup and the exact fix for anything wrong.
+
 Two problems, two pieces:
 
 1. **Task state doesn't survive a switch.** Transcripts carry hidden reasoning, tool state and provider-specific
@@ -12,8 +16,9 @@ Two problems, two pieces:
    decisions, rejected options, open questions, next steps. It adds live git state and renders `HANDOFF.md`.
 2. **Codebase understanding doesn't survive a switch.** The new model would re-read files to relearn the
    architecture, which burns the limit you're trying to stretch. ctxrelay indexes the repo into a SQLite
-   graph and serves narrow queries (callers, impact, communities, hubs) over MCP, so the answer costs a few
-   hundred tokens instead of a pile of file reads. Any MCP-capable CLI can use it.
+   graph and serves narrow queries (callers, impact, communities, hubs) over MCP. The idea is that an answer costs a
+   few hundred tokens instead of a pile of file reads; that is a hypothesis, not yet measured on large repos. Any
+   MCP-capable CLI can use it.
 
 **What it deliberately does not do:** rotate or proxy subscription OAuth tokens. Anthropic has restricted
 using Free/Pro/Max tokens outside its own clients, and other providers' terms on pooling accounts are
@@ -22,8 +27,9 @@ unclear. You stay in the official CLIs and ctxrelay only hands context across.
 ## Install
 
 ```sh
-git clone https://github.com/JyotBuch/ctxrelay && cd ctxrelay
-pip install -e .        # Python 3.9+, no dependencies
+pipx install git+https://github.com/JyotBuch/ctxrelay      # Python 3.9+, no dependencies
+# or: uvx --from git+https://github.com/JyotBuch/ctxrelay ctxrelay
+# contributors: git clone https://github.com/JyotBuch/ctxrelay && cd ctxrelay && pip install -e .
 ```
 
 ## Use
@@ -32,6 +38,7 @@ pip install -e .        # Python 3.9+, no dependencies
 cd your-project
 ctxrelay init           # writes AGENTS.md rules (+ CLAUDE.md/GEMINI.md importing it), builds the graph
 ctxrelay init --hooks    # optional: Claude Code hooks record edits/test runs automatically (Codex sessions are recovered from transcripts at switch time)
+ctxrelay doctor          # checks CLIs, MCP registration, hooks and graph, and prints the exact fix for each problem
 ctxrelay                 # (no arguments) shows what is set up and what the next switch would carry; same as `ctxrelay status`
 claude mcp add ctxrelay -- ctxrelay serve     # once per tool
 codex mcp add ctxrelay -- ctxrelay serve
@@ -45,8 +52,9 @@ Headless `codex exec` refuses MCP tool calls that need approval. To let it use c
 default_tools_approval_mode = "approve"
 ```
 
-While you work, agents record state with the `handoff_note` tool (the rules in `AGENTS.md` tell them to).
-You can also do it yourself:
+Edits, test runs and failures are captured automatically (hooks for Claude Code, transcripts for Codex). What cannot
+be captured is intent, so agents record it with the `handoff_note` tool (the rules in `AGENTS.md` ask for the goal,
+user requirements, decisions with reasons, and ruled-out options, not progress logs). You can also do it yourself:
 
 ```sh
 ctxrelay note decision "Use SQLite, not Postgres: single-user tool"
@@ -57,8 +65,9 @@ ctxrelay note next "Wire the retry logic into client.py"
 When a limit is close:
 
 ```sh
-ctxrelay switch codex --reindex    # writes .ctxrelay/HANDOFF.md, refreshes graph, launches codex with a prompt to read it
-ctxrelay switch claude             # or gemini; `ctxrelay switch print` just prints the handoff
+ctxrelay switch codex --dry-run    # checks the destination, refreshes the graph, writes the handoff, shows what transfers
+ctxrelay switch codex              # same, then launches codex with a prompt to read the handoff
+ctxrelay switch claude             # the other direction; `ctxrelay switch print` just prints the handoff
 ```
 
 Query the graph directly: `ctxrelay q find|callers|callees|impact|file|community|hubs [arg]`.
@@ -137,23 +146,29 @@ small repo, one set of queries, and colgrep missed the exact symbol in 16 of 60 
 
 Checked against real clients (Claude Code 2.1.296, Codex 0.162.1): the MCP tools return correct results, notes persist,
 and the `AGENTS.md` rules reach the model. Automated tests cover server robustness to bad input.
-Not run: the interactive `ctxrelay switch` launch.
+Not yet verified: the interactive `ctxrelay switch` launch, hooks inside a long live Claude session, Codex transcript
+capture on real sessions (fixture-tested only), anything Gemini, Windows.
 
-### End-to-end pilot (does a handoff help a different model finish a task?)
+### Does it help? (the handoff benchmark)
 
-One task, one run per condition, so **directional only**. Claude Code was cut off mid-task, then Codex finished it:
+`eval/bench`: four small Python tasks where the interrupted state is scripted and hidden tests decide success. Codex
+continued each task under: cold start (C0), git status pasted in (C1), a naive prose summary plus diff (C2), the
+ctxrelay handoff with its MCP tools (C3), and the same handoff file without MCP (C4).
 
-| Condition | Succeeded | Input tokens | Wall time |
-|---|---|---|---|
-| Cold (task restated) | yes | 145,516 | 44 s |
-| Git status/diff pasted in | yes | 129,215 | 37 s |
-| ctxrelay handoff + graph | yes | 465,824 | 95 s |
+| Condition | Succeeded (4 tasks, 1 run each) |
+|---|---|
+| C0 cold start | 2/4 |
+| C1 git status | 2/4 |
+| C2 naive prose handoff | 4/4 |
+| C3 ctxrelay | 4/4 |
 
 How to read this:
-- All three succeeded, so the task was too easy to separate them. This is **not evidence that ctxrelay helps yet**.
-- The ctxrelay condition cost about 3x the tokens and twice the time: on a 6-file change, the extra handoff and
-  graph calls are pure overhead. Expect the benefit, if any, on large tasks where re-learning the codebase is costly.
-- A fair test needs harder tasks, several repeats and a scripted interruption point; see `eval/RESULTS.md`.
+- **The information is what helps.** Cold start failed exactly on the two tasks with a requirement only the previous
+  session knew (keep accepting the legacy key; leave the boundary behavior alone).
+- **No evidence that ctxrelay's format beats a prose summary.** Both succeeded. MCP added cost: before the rules fix,
+  up to 6x the uncached tokens; after it about 1.5-2x, and the handoff file alone (C4) cost the same as the prose summary.
+- **Weak evidence overall:** one to two runs per cell, tiny repos, one model, and the previous session is scripted so C2 and
+  C3 get the same facts. Whether the graph pays off on large repos is the open question. Details and raw data in `eval/RESULTS.md`.
 
 ## Limits (read these)
 
