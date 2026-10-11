@@ -1,0 +1,8 @@
+{
+  "goal": "Move fnmatch_ex from src/_pytest/pathlib.py to new src/_pytest/_globmatch.py; update all imports/uses in src/ and testing/; no re-export/alias in pathlib.py; no other changes or behavior change.",
+  "constraint": [],
+  "decision": [],
+  "rejected": [],
+  "open": [],
+  "next": []
+}

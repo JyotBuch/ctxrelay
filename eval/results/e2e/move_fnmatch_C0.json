@@ -1,0 +1,23 @@
+{
+ "task": "move_fnmatch",
+ "cond": "C0",
+ "wall_s": 44.0,
+ "input_tokens": 145516,
+ "cached_input_tokens": 131584,
+ "output_tokens": 1505,
+ "commands": 6,
+ "mcp_calls": 0,
+ "file_changes": 0,
+ "steps_before_first_edit": null,
+ "errors": [],
+ "success": true,
+ "defined_in_new_module": true,
+ "still_defined_in_old": false,
+ "files_with_wrong_imports": [],
+ "collateral": [],
+ "imports_ok": true,
+ "tests_pass": true,
+ "tests_tail": [
+  "19 passed, 94 deselected in 0.17s"
+ ]
+}

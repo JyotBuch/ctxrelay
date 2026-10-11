@@ -1,0 +1,12 @@
+# Pinned benchmark repos. Go is deferred until a Go toolchain (gopls) is available.
+[[repo]]
+name = "pytest"
+url = "https://github.com/pytest-dev/pytest"
+sha = "587ebc501ba292539202a1aac3a7f5b0112a08ec"
+lang = "python"
+
+[[repo]]
+name = "nest"
+url = "https://github.com/nestjs/nest"
+sha = "2731c18054fb348779311d81e4e20949e313be78"
+lang = "typescript"

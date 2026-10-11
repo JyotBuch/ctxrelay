@@ -1,0 +1,131 @@
+{
+ "expected_files": [
+  "src/_pytest/assertion/rewrite.py",
+  "src/_pytest/doctest.py",
+  "src/_pytest/main.py",
+  "src/_pytest/pathlib.py",
+  "src/_pytest/python.py",
+  "testing/test_pathlib.py"
+ ],
+ "wall_s": 14.462144136428833,
+ "stage_a_raw": {
+  "duration_api_ms": 13293,
+  "stop_reason": "tool_use",
+  "session_id": "2fc415bb-9a1b-4421-bcf9-1f9080321cd4",
+  "total_cost_usd": 0.04261380000000001,
+  "usage": {
+   "input_tokens": 8,
+   "cache_creation_input_tokens": 4095,
+   "cache_read_input_tokens": 83478,
+   "output_tokens": 1787,
+   "output_tokens_details": {
+    "thinking_tokens": 91
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 4095,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 988,
+     "cache_read_input_tokens": 22294,
+     "cache_creation_input_tokens": 1858,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1858
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 8,
+    "outputTokens": 1787,
+    "cacheReadInputTokens": 83478,
+    "cacheCreationInputTokens": 4095,
+    "webSearchRequests": 0,
+    "costUSD": 0.04261380000000001,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 91,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "max_turns",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": true,
+  "num_turns": 5,
+  "subtype": "error_max_turns",
+  "errors": [
+   "Reached maximum number of turns (4)"
+  ],
+  "type": "result",
+  "duration_ms": 13676,
+  "uuid": "e0d5c293-61a7-4311-9477-e9eb42008d84",
+  "queued_turn_count": 0,
+  "result_index": 0
+ },
+ "interrupted_check": {
+  "success": false,
+  "defined_in_new_module": true,
+  "still_defined_in_old": false,
+  "files_with_wrong_imports": [
+   "src/_pytest/assertion/rewrite.py",
+   "src/_pytest/doctest.py",
+   "src/_pytest/main.py",
+   "src/_pytest/python.py",
+   "testing/test_pathlib.py"
+  ],
+  "collateral": [],
+  "imports_ok": false,
+  "tests_pass": false,
+  "tests_tail": []
+ },
+ "notes": {
+  "goal": "Move fnmatch_ex from src/_pytest/pathlib.py to new src/_pytest/_globmatch.py; update all imports/uses in src/ and testing/; no re-export/alias in pathlib.py; no other changes or behavior change.",
+  "constraint": [],
+  "decision": [],
+  "rejected": [],
+  "open": [],
+  "next": []
+ }
+}

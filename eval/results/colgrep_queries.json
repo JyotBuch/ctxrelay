@@ -1,0 +1,302 @@
+[
+ {
+  "name": "TwistedVersion",
+  "file": "_pytest/unittest.py",
+  "doc": "The Twisted version installed in the environment.\n\nWe have different workarounds in place for different versions of Twisted.",
+  "query": "which installed Twisted release is detected so version-specific workarounds can be chosen"
+ },
+ {
+  "name": "TestReport",
+  "file": "_pytest/reports.py",
+  "doc": "Basic test report object (also used for setup and teardown calls if\nthey fail).\n\nReports can contain arbitrary extra attributes.",
+  "query": "result object for a test run phase, including setup and teardown failures, with extra attributes"
+ },
+ {
+  "name": "ApproxNumpy",
+  "file": "_pytest/approx.py",
+  "doc": "Perform approximate comparisons where the expected value is numpy array.",
+  "query": "fuzzy equality check when the expected value is an ndarray"
+ },
+ {
+  "name": "deduplicate_names",
+  "file": "_pytest/fixtures.py",
+  "doc": "De-duplicate the sequence of names while keeping the original order.",
+  "query": "remove repeated entries from a list of strings while preserving first-seen order"
+ },
+ {
+  "name": "locate_config",
+  "file": "_pytest/config/findpaths.py",
+  "doc": "Search in the list of arguments for a valid ini-file for pytest,\nand return a tuple of (rootdir, inifile, cfg-dict, ignored-config-files), where\nignored-config-files is a list of config basenames found that contain\npytest configuration but were ignored.",
+  "query": "find the ini configuration file and root directory from command line arguments, noting skipped config files"
+ },
+ {
+  "name": "catching_logs",
+  "file": "_pytest/logging.py",
+  "doc": "Context manager that prepares the whole logging machinery properly.",
+  "query": "context manager that attaches a log handler and sets level during a block"
+ },
+ {
+  "name": "safe_exists",
+  "file": "_pytest/pathlib.py",
+  "doc": "Like Path.exists(), but account for input arguments that might be too long (#11394).",
+  "query": "check whether a path exists without crashing on overly long filenames"
+ },
+ {
+  "name": "is_async_function",
+  "file": "_pytest/compat.py",
+  "doc": "Return True if the given function seems to be an async function or\nan async generator.",
+  "query": "detect whether a callable is a coroutine function or async generator"
+ },
+ {
+  "name": "copystat",
+  "file": "_pytest/_py/path.py",
+  "doc": "Copy permission,  last modification time,\nlast access time, and flags from src to dst.",
+  "query": "copy file permissions, timestamps and flags from one path to another"
+ },
+ {
+  "name": "CollectReport",
+  "file": "_pytest/reports.py",
+  "doc": "Collection report object.\n\nReports can contain arbitrary extra attributes.",
+  "query": "result object produced when gathering tests from a file or node, with arbitrary extra attributes"
+ },
+ {
+  "name": "Directory",
+  "file": "_pytest/nodes.py",
+  "doc": "Base class for collecting files from a directory.\n\nA basic directory collector does the following: goes over the files and\nsub-directories in the directory and creates collectors for them by calling\nthe hooks :hook:`pytest_collect_directory` and :hook:`pytest_collect_file`,\nafter checking that they are not ignored using\n:hook:`pytest_ignore_collect`.\n\nThe default directory collectors are :class:`~",
+  "query": "base collector that walks a folder and creates collectors for its files and subfolders"
+ },
+ {
+  "name": "absolutepath",
+  "file": "_pytest/pathlib.py",
+  "doc": "Convert a path to an absolute path using os.path.abspath.\n\nPrefer this over Path.resolve() (see #6523).\nPrefer this over Path.absolute() (not public, doesn't normalize).",
+  "query": "turn a path into an absolute normalized one without resolving symlinks"
+ },
+ {
+  "name": "get_param_argkeys",
+  "file": "_pytest/fixtures.py",
+  "doc": "Return all ParamArgKeys for item matching the specified high scope.",
+  "query": "list parametrized argument keys for a test item at a given scope"
+ },
+ {
+  "name": "format_explanation",
+  "file": "_pytest/assertion/util.py",
+  "doc": "Format an explanation.\n\nNormally all embedded newlines are escaped, however there are\nthree exceptions: \\n{, \\n} and \\n~.  The first two are intended\ncover nested explanations, see function and attribute explanations\nfor examples (.visit_Call(), visit_Attribute()).  The last one is\nfor when one explanation needs to span multiple lines, e.g. when\ndisplaying diffs.",
+  "query": "escape newlines in assertion failure messages while keeping special nested-block markers"
+ },
+ {
+  "name": "HelpAction",
+  "file": "_pytest/helpconfig.py",
+  "doc": "An argparse Action that will raise a PrintHelp exception in order to skip\nthe rest of the argument parsing when --help is passed.\n\nThis prevents argparse from raising UsageError when `--help` is used along\nwith missing required arguments when any are defined, for example by\n``pytest_addoption``. This is similar to the way that the builtin argparse\n--help option is implemented by raising SystemExit",
+  "query": "argparse action that aborts parsing early when help flag is given, avoiding missing argument errors"
+ },
+ {
+  "name": "doctest_namespace",
+  "file": "_pytest/doctest.py",
+  "doc": "Fixture that returns a :py:class:`dict` that will be injected into the\nnamespace of doctests.\n\nUsually this fixture is used in conjunction with another ``autouse`` fixture:\n\n.. code-block:: python\n\n    @pytest.fixture(autouse=True)\n    def add_np(doctest_namespace):\n        doctest_namespace[\"np\"] = numpy\n\nFor more details: :ref:`doctest_namespace`.",
+  "query": "fixture providing a dictionary of names made available inside docstring examples"
+ },
+ {
+  "name": "recwarn",
+  "file": "_pytest/recwarn.py",
+  "doc": "Return a :class:`WarningsRecorder` instance that records all warnings emitted by test functions.\n\nSee :ref:`warnings` for information on warning categories.",
+  "query": "fixture that captures all warnings raised during a test for later inspection"
+ },
+ {
+  "name": "fnmatch_ex",
+  "file": "_pytest/pathlib.py",
+  "doc": "A port of FNMatcher from py.path.common which works with PurePath() instances.\n\nThe difference between this algorithm and PurePath.match() is that the\nlatter matches \"**\" glob expressions for each part of the path, while\nthis algorithm uses the whole path instead.\n\nFor example:\n    \"tests/foo/bar/doc/test_foo.py\" matches pattern \"tests/**/doc/test*.py\"\n    with this algorithm, but not with PurePat",
+  "query": "match a filesystem path against a glob pattern using the full path including double-star"
+ },
+ {
+  "name": "ExitCode",
+  "file": "_pytest/config/__init__.py",
+  "doc": "Encodes the valid exit codes by pytest.\n\nCurrently users and plugins may supply other exit codes as well.\n\n.. versionadded:: 5.0",
+  "query": "enumeration of the process exit statuses returned by the test runner"
+ },
+ {
+  "name": "MoreQuietAction",
+  "file": "_pytest/terminal.py",
+  "doc": "A modified copy of the argparse count action which counts down and updates\nthe legacy quiet attribute at the same time.\n\nUsed to unify verbosity handling.",
+  "query": "argparse action that decrements verbosity when the quiet flag is repeated"
+ },
+ {
+  "name": "try_makedirs",
+  "file": "_pytest/assertion/rewrite.py",
+  "doc": "Attempt to create the given directory and sub-directories exist.\n\nReturns True if successful or if it already exists.",
+  "query": "create a directory tree and report whether it exists afterward without raising"
+ },
+ {
+  "name": "ensure_deletable",
+  "file": "_pytest/pathlib.py",
+  "doc": "Check if `path` is deletable based on whether the lock file is expired.",
+  "query": "decide if a directory can be removed by checking whether its lock file has expired"
+ },
+ {
+  "name": "Config_invocation_dir",
+  "file": "_pytest/legacypath.py",
+  "doc": "The directory from which pytest was invoked.\n\nPrefer to use :attr:`invocation_params.dir <InvocationParams.dir>`,\nwhich is a :class:`pathlib.Path`.\n\n:type: LEGACY_PATH",
+  "query": "legacy property returning the working directory from which the test tool was launched"
+ },
+ {
+  "name": "safe_getattr",
+  "file": "_pytest/compat.py",
+  "doc": "Like getattr but return default upon any Exception or any OutcomeException.\n\nAttribute access can potentially fail for 'evil' Python objects.\nSee issue #214.\nIt catches OutcomeException because of #2490 (issue #580), new outcomes\nare derived from BaseException instead of Exception (for more details\ncheck #2707).",
+  "query": "read an attribute returning a default if accessing it raises any error"
+ },
+ {
+  "name": "resolve_pkg_root_and_module_name",
+  "file": "_pytest/pathlib.py",
+  "doc": "Return the path to the directory of the root package that contains the\ngiven Python file, and its module name:\n\n    src/\n        app/\n            __init__.py\n            core/\n                __init__.py\n                models.py\n\nPassing the full path to `models.py` will yield Path(\"src\") and \"app.core.models\".\n\nIf consider_namespace_packages is True, then we additionally check upwards in the hie",
+  "query": "find the top-level package directory and dotted module name for a python file"
+ },
+ {
+  "name": "ConfigValue",
+  "file": "_pytest/config/findpaths.py",
+  "doc": "Represents a configuration value with its origin and parsing mode.\n\nThis allows tracking whether a value came from a configuration file\nor from a CLI override (--override-ini), which is important for\ndetermining precedence when dealing with ini option aliases.\n\nThe mode tracks the parsing mode/data model used for the value:\n- \"ini\": from INI files or [tool.pytest.ini_options], where the only\n  sup",
+  "query": "holds a setting value along with whether it came from file or command line override"
+ },
+ {
+  "name": "resolve_fixture_function",
+  "file": "_pytest/fixtures.py",
+  "doc": "Get the actual callable that can be called to obtain the fixture\nvalue.",
+  "query": "obtain the actual callable to invoke to produce a fixture's value"
+ },
+ {
+  "name": "FunctionDefinition",
+  "file": "_pytest/python.py",
+  "doc": "This class is a stop gap solution until we evolve to have actual function\ndefinition nodes and manage to get rid of ``metafunc``.",
+  "query": "temporary placeholder item class standing in for a function node used during parametrization"
+ },
+ {
+  "name": "catch_warnings_for_item",
+  "file": "_pytest/warnings.py",
+  "doc": "Context manager that catches warnings generated in the contained execution block.\n\n``item`` can be None if we are not in the context of an item execution.\n\nEach warning captured triggers the ``pytest_warning_recorded`` hook.",
+  "query": "context manager capturing warnings during a test and firing a hook for each one"
+ },
+ {
+  "name": "ExceptionInfo",
+  "file": "_pytest/_code/code.py",
+  "doc": "Wraps sys.exc_info() objects and offers help for navigating the traceback.",
+  "query": "wrapper around caught exception data that helps navigate and format the traceback"
+ },
+ {
+  "name": "evaluate_condition",
+  "file": "_pytest/skipping.py",
+  "doc": "Evaluate a single skipif/xfail condition.\n\nIf an old-style string condition is given, it is eval()'d, otherwise the\ncondition is bool()'d. If this fails, an appropriately formatted pytest.fail\nis raised.\n\nReturns (result, reason). The reason is only relevant if the result is True.",
+  "query": "evaluate a skip or expected-failure condition, either string expression or boolean, returning result and reason"
+ },
+ {
+  "name": "ApproxTimedelta",
+  "file": "_pytest/approx.py",
+  "doc": "Perform approximate comparisons where the expected value is a\ndatetime or timedelta.\n\nRequires an explicit tolerance as a timedelta for abs, or a float for rel.\nRelative tolerance is not supported for datetime comparisons.",
+  "query": "tolerance-based comparison for dates and time durations requiring explicit absolute or relative tolerance"
+ },
+ {
+  "name": "TruncationBudget",
+  "file": "_pytest/assertion/_typing.py",
+  "doc": "Per-explanation budget for truncating assertion output.\n\n``max_lines`` / ``max_chars`` mirror the ``truncation_limit_lines`` /\n``truncation_limit_chars`` ini values: a positive limit bounds that\ndimension; ``0`` leaves it unbounded (the limit is disabled).",
+  "query": "limits on number of lines and characters when shortening assertion failure output"
+ },
+ {
+  "name": "PytestDeprecationWarning",
+  "file": "_pytest/warning_types.py",
+  "doc": "Warning class for features that will be removed in a future version.",
+  "query": "warning category signaling a feature scheduled for removal in a future release"
+ },
+ {
+  "name": "record_testsuite_property",
+  "file": "_pytest/junitxml.py",
+  "doc": "Record a new ``<property>`` tag as child of the root ``<testsuite>``.\n\nThis is suitable to writing global information regarding the entire test\nsuite, and is compatible with ``xunit2`` JUnit family.\n\nThis is a ``session``-scoped fixture which is called with ``(name, value)``. Example:\n\n.. code-block:: python\n\n    def test_foo(record_testsuite_property):\n        record_testsuite_property(\"ARCH\", \"P",
+  "query": "fixture to add a custom property element to the root of the XML test report"
+ },
+ {
+  "name": "get_user",
+  "file": "_pytest/tmpdir.py",
+  "doc": "Return the current user name, or None if getuser() does not work\nin the current environment (see #1010).",
+  "query": "get the login name of the current user, handling environments where lookup fails"
+ },
+ {
+  "name": "num_mock_patch_args",
+  "file": "_pytest/compat.py",
+  "doc": "Return number of arguments used up by mock arguments (if any).",
+  "query": "count how many function parameters are consumed by mock patch decorators"
+ },
+ {
+  "name": "create_new_paste",
+  "file": "_pytest/pastebin.py",
+  "doc": "Create a new paste using the bpaste.net service.\n\n:contents: Paste contents string.\n:returns: URL to the pasted contents, or an error message.",
+  "query": "upload text to an online pastebin service and get back its link"
+ },
+ {
+  "name": "ensure_extended_length_path",
+  "file": "_pytest/pathlib.py",
+  "doc": "Get the extended-length version of a path (Windows).\n\nOn Windows, by default, the maximum length of a path (MAX_PATH) is 260\ncharacters, and operations on paths longer than that fail. But it is possible\nto overcome this by converting the path to \"extended-length\" form before\nperforming the operation:\nhttps://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#maximum-path-length-limitation",
+  "query": "convert Windows path to long-path prefix form to bypass the 260 character limit"
+ },
+ {
+  "name": "pytestconfig",
+  "file": "_pytest/fixtures.py",
+  "doc": "Session-scoped fixture that returns the session's :class:`pytest.Config`\nobject.\n\nExample::\n\n    def test_foo(pytestconfig):\n        if pytestconfig.get_verbosity() > 0:\n            ...",
+  "query": "fixture giving tests access to the global configuration object for the whole session"
+ },
+ {
+  "name": "traverse_fixture_closure",
+  "file": "_pytest/fixtures.py",
+  "doc": "Statically traverse the fixture dependency closure in DFS order starting\nfrom initialnames, yielding all requested fixture names (argnames).\n\nEach argname is only yielded once.",
+  "query": "depth-first walk of fixture dependencies yielding each required fixture name once"
+ },
+ {
+  "name": "OverrideIniAction",
+  "file": "_pytest/config/argparsing.py",
+  "doc": "Custom argparse action that makes a CLI flag equivalent to overriding an\noption, in addition to behaving like `store_true`.\n\nThis can simplify things since code only needs to inspect the config option\nand not consider the CLI flag.",
+  "query": "argparse flag action that also sets a configuration option, acting like a boolean switch"
+ },
+ {
+  "name": "resolve_collection_argument",
+  "file": "_pytest/main.py",
+  "doc": "Parse path arguments optionally containing selection parts and return (fspath, names).\n\nCommand-line arguments can point to files and/or directories, and optionally contain\nparts for specific tests selection, for example:\n\n    \"pkg/tests/test_foo.py::TestClass::test_foo\"\n\nThis function ensures the path exists, and returns a resolved `CollectionArgument`:\n\n    CollectionArgument(\n        path=Path(",
+  "query": "parse a command line test path with optional double-colon selectors into file path and names"
+ },
+ {
+  "name": "Testdir",
+  "file": "_pytest/legacypath.py",
+  "doc": "Similar to :class:`Pytester`, but this class works with legacy legacy_path objects instead.\n\nAll methods just forward to an internal :class:`Pytester` instance, converting results\nto `legacy_path` objects as necessary.",
+  "query": "legacy-path flavored wrapper around the plugin testing helper for writing and running tests in temp dirs"
+ },
+ {
+  "name": "parse_warning_filter",
+  "file": "_pytest/config/__init__.py",
+  "doc": "Parse a warnings filter string.\n\nThis is copied from warnings._setoption with the following changes:\n\n* Does not apply the filter.\n* Escaping is optional.\n* Raises UsageError so we get nice error messages on failure.",
+  "query": "convert a warning filter string into its components without applying it, raising usage errors on bad input"
+ },
+ {
+  "name": "FDCapture",
+  "file": "_pytest/capture.py",
+  "doc": "Capture IO to/from a given OS-level file descriptor.\n\nsnap() produces text.",
+  "query": "redirect and record output of a low-level file descriptor as text"
+ },
+ {
+  "name": "CallSpec",
+  "file": "_pytest/python.py",
+  "doc": "A planned parameterized invocation of a test function.\n\nCalculated during collection for a given test function's Metafunc.\nOnce collection is over, each callspec is turned into a single Item\nand stored in item.callspec.",
+  "query": "planned parameter set for one generated invocation of a parametrized test"
+ },
+ {
+  "name": "TerminalRepr",
+  "file": "_pytest/_code/code.py",
+  "doc": "Base class for terminal representations -- pieces of data that display\nthemselves to a terminal.",
+  "query": "base class for objects that know how to print themselves to the console"
+ },
+ {
+  "name": "module_name_from_path",
+  "file": "_pytest/pathlib.py",
+  "doc": "Return a dotted module name based on the given path, anchored on root.\n\nFor example: path=\"projects/src/tests/test_foo.py\" and root=\"/projects\", the\nresulting module name will be \"src.tests.test_foo\".",
+  "query": "compute dotted import name for a file relative to a root directory"
+ },
+ {
+  "name": "traverse_node",
+  "file": "_pytest/assertion/rewrite.py",
+  "doc": "Recursively yield node and all its children in depth-first order.",
+  "query": "depth-first generator walking a tree node and all its descendants"
+ }
+]

@@ -1,0 +1,1540 @@
+{
+ "repo": {
+  "name": "nest",
+  "url": "https://github.com/nestjs/nest",
+  "sha": "2731c18054fb348779311d81e4e20949e313be78",
+  "lang": "typescript"
+ },
+ "build_seconds": 0.855072021484375,
+ "peak_rss_mb": 70.234375,
+ "db_mb": 1.441792,
+ "summary": "indexed 2012 files, 3828 symbols, 13311 edges, 727 communities",
+ "rows": [
+  {
+   "tier": "hub",
+   "name": "FastifyAdapter",
+   "file": "packages/platform-fastify/adapters/fastify-adapter.ts",
+   "ambiguous": false,
+   "n_ours": 2,
+   "n_truth": 1,
+   "precision": 0.5,
+   "recall": 1.0,
+   "f1": 0.6666666666666666,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/file-upload/e2e/utils.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Injectable",
+   "file": "packages/common/decorators/core/injectable.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 31,
+   "n_truth": 15,
+   "precision": 0.41935483870967744,
+   "recall": 0.8666666666666667,
+   "f1": 0.5652173913043478,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/injector/src/self-injection/self-injection-provider.module.ts",
+    "integration/inspector/src/core/interceptors/transform.interceptor.ts",
+    "integration/microservices/src/app.module.ts",
+    "integration/microservices/src/tcp-tls/app.module.ts",
+    "integration/nest-application/observable-response/src/app.controller.ts"
+   ],
+   "missed_files": [
+    "packages/common/pipes/default-value.pipe.ts",
+    "packages/common/pipes/file/parse-file.pipe.ts"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "NestContainer",
+   "file": "packages/core/injector/container.ts",
+   "ambiguous": true,
+   "n_ours": 33,
+   "n_truth": 23,
+   "precision": 0.696969696969697,
+   "recall": 1.0,
+   "f1": 0.8214285714285715,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/microservices/context/exception-filters-context.ts",
+    "packages/microservices/listeners-controller.ts",
+    "packages/microservices/microservices-module.ts",
+    "packages/microservices/nest-microservice.ts",
+    "packages/testing/testing-injector.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Module",
+   "file": "packages/core/injector/module.ts",
+   "ambiguous": true,
+   "n_ours": 55,
+   "n_truth": 29,
+   "precision": 0.4909090909090909,
+   "recall": 0.9310344827586207,
+   "f1": 0.6428571428571428,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/_support/register-local-packages.ts",
+    "integration/file-upload/src/upload.module.ts",
+    "integration/graphql-schema-first/src/async-options-class.module.ts",
+    "integration/hello-world/e2e/middleware-run-match-route.ts",
+    "integration/hooks/src/enable-shutdown-hooks-main.ts"
+   ],
+   "missed_files": [
+    "packages/core/internal.ts",
+    "packages/core/router/router-module.ts"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "Query",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Optional",
+   "file": "packages/common/decorators/core/optional.decorator.ts",
+   "ambiguous": false,
+   "n_ours": 24,
+   "n_truth": 14,
+   "precision": 0.5833333333333334,
+   "recall": 1.0,
+   "f1": 0.7368421052631579,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/injector/src/defaults/defaults.service.ts",
+    "integration/inspector/src/defaults/defaults.service.ts",
+    "integration/scopes/src/durable/durable-zoo.service.ts",
+    "packages/core/exceptions/base-exception-filter.ts",
+    "packages/platform-express/multer/interceptors/any-files.interceptor.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Controller",
+   "file": "packages/common/decorators/core/controller.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 17,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/cookies/src/app.controller.ts",
+    "integration/file-upload/src/upload.module.ts",
+    "integration/hello-world/e2e/middleware-run-match-route.ts",
+    "integration/microservices/src/grpc/grpc.controller.ts",
+    "integration/microservices/src/kafka-concurrent/kafka-concurrent.controller.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Logger",
+   "file": "packages/common/services/logger.service.ts",
+   "ambiguous": true,
+   "n_ours": 55,
+   "n_truth": 4,
+   "precision": 0.05454545454545454,
+   "recall": 0.75,
+   "f1": 0.10169491525423728,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/injector/src/scoped/transient2.service.ts",
+    "integration/microservices/src/kafka-concurrent/kafka-concurrent.controller.ts",
+    "integration/microservices/src/kafka/kafka.controller.ts",
+    "integration/microservices/src/kafka/kafka.messages.controller.ts",
+    "integration/scopes/src/inject-inquirer/hello-request/request-logger.service.ts"
+   ],
+   "missed_files": [
+    "packages/common/pipes/file/file-type.validator.ts"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "Body",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Param",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Param",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Body",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Query",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Body",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "ApplicationConfig",
+   "file": "packages/core/application-config.ts",
+   "ambiguous": true,
+   "n_ours": 29,
+   "n_truth": 20,
+   "precision": 0.6896551724137931,
+   "recall": 1.0,
+   "f1": 0.8163265306122449,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/microservices/context/exception-filters-context.ts",
+    "packages/microservices/context/rpc-context-creator.ts",
+    "packages/microservices/microservices-module.ts",
+    "packages/microservices/nest-microservice.ts",
+    "packages/testing/testing-module.builder.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "InstanceWrapper",
+   "file": "packages/core/injector/instance-wrapper.ts",
+   "ambiguous": true,
+   "n_ours": 30,
+   "n_truth": 25,
+   "precision": 0.8,
+   "recall": 0.96,
+   "f1": 0.8727272727272728,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "packages/microservices/context/exception-filters-context.ts",
+    "packages/microservices/listeners-controller.ts",
+    "packages/microservices/microservices-module.ts",
+    "packages/testing/testing-injector.ts",
+    "packages/websockets/socket-module.ts"
+   ],
+   "missed_files": [
+    "packages/core/internal.ts"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "Inject",
+   "file": "packages/common/decorators/core/inject.decorator.ts",
+   "ambiguous": false,
+   "n_ours": 68,
+   "n_truth": 2,
+   "precision": 0.029411764705882353,
+   "recall": 1.0,
+   "f1": 0.05714285714285715,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/injector/src/circular-modules/circular.service.ts",
+    "integration/injector/src/circular-modules/input.service.ts",
+    "integration/injector/src/circular-properties/circular.service.ts",
+    "integration/injector/src/circular-properties/input.service.ts",
+    "integration/injector/src/circular/circular.service.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Controller",
+   "file": "packages/common/decorators/core/controller.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 17,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/cookies/src/app.controller.ts",
+    "integration/file-upload/src/upload.module.ts",
+    "integration/hello-world/e2e/middleware-run-match-route.ts",
+    "integration/microservices/src/grpc/grpc.controller.ts",
+    "integration/microservices/src/kafka-concurrent/kafka-concurrent.controller.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "Body",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "BadRequestException",
+   "file": "packages/common/exceptions/bad-request.exception.ts",
+   "ambiguous": false,
+   "n_ours": 11,
+   "n_truth": 1,
+   "precision": 0.09090909090909091,
+   "recall": 1.0,
+   "f1": 0.16666666666666669,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/file-upload/src/upload.module.ts",
+    "integration/hello-world/src/errors/errors.controller.ts",
+    "integration/inspector/src/common/pipes/parse-int.pipe.ts",
+    "integration/query-method/src/query-method.controller.ts",
+    "integration/scopes/src/durable/durable.controller.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "LazyModuleLoader",
+   "file": "packages/core/injector/lazy-module-loader/lazy-module-loader.ts",
+   "ambiguous": false,
+   "n_ours": 4,
+   "n_truth": 2,
+   "precision": 0.5,
+   "recall": 1.0,
+   "f1": 0.6666666666666666,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/lazy-modules/src/app.module.ts",
+    "integration/lazy-modules/src/lazy.controller.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "GrpcStreamCall",
+   "file": "packages/microservices/decorators/message-pattern.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 3,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/microservices/src/grpc-advanced/advanced.grpc.controller.ts",
+    "integration/microservices/src/grpc-edge/edge.controller.ts",
+    "integration/microservices/src/grpc/grpc.controller.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "tryLoadPackage",
+   "file": "packages/common/utils/load-package.util.ts",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/core/nest-application.ts",
+    "packages/platform-fastify/adapters/fastify-adapter.ts",
+    "packages/testing/testing-module.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "Catch",
+   "file": "packages/common/decorators/core/catch.decorator.ts",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/nest-application/observable-response/src/app.controller.ts",
+    "integration/query-method/src/query-method.controller.ts",
+    "packages/microservices/exceptions/grpc-exception-filter.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "MessageHandler",
+   "file": "packages/microservices/interfaces/message-handler.interface.ts",
+   "ambiguous": false,
+   "n_ours": 6,
+   "n_truth": 6,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "NestMicroservice",
+   "file": "packages/microservices/nest-microservice.ts",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "packages/core/nest-application.ts",
+    "packages/core/nest-factory.ts",
+    "packages/testing/testing-module.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "flatten",
+   "file": "packages/common/decorators/core/dependencies.decorator.ts",
+   "ambiguous": false,
+   "n_ours": 5,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ]
+   ],
+   "false_files": [
+    "packages/common/pipes/validation.pipe.ts",
+    "packages/core/discovery/discovery-service.ts",
+    "packages/core/middleware/builder.ts",
+    "packages/core/router/route-path-factory.ts",
+    "packages/core/scanner.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "getMediaTypeVersion",
+   "file": "packages/platform-fastify/adapters/utils/get-media-type-version.util.ts",
+   "ambiguous": true,
+   "n_ours": 2,
+   "n_truth": 1,
+   "precision": 0.5,
+   "recall": 1.0,
+   "f1": 0.6666666666666666,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/platform-express/adapters/express-adapter.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "UploadedFiles",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/file-upload/src/upload.module.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "InvalidDecoratorItemException",
+   "file": "packages/common/utils/validate-each.util.ts",
+   "ambiguous": false,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "StreamableFile",
+   "file": "packages/common/file-stream/streamable-file.ts",
+   "ambiguous": false,
+   "n_ours": 7,
+   "n_truth": 2,
+   "precision": 0.2857142857142857,
+   "recall": 1.0,
+   "f1": 0.4444444444444445,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "integration/send-files/src/app.controller.ts",
+    "integration/send-files/src/app.service.ts",
+    "packages/platform-express/adapters/express-adapter.ts",
+    "packages/platform-fastify/adapters/fastify-adapter.ts",
+    "packages/platform-fastify/multipart/multipart/multipart-interceptor.factory.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "ClientRedis",
+   "file": "packages/microservices/client/client-redis.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "InternalServerErrorException",
+   "file": "packages/common/exceptions/internal-server-error.exception.ts",
+   "ambiguous": false,
+   "n_ours": 5,
+   "n_truth": 1,
+   "precision": 0.2,
+   "recall": 1.0,
+   "f1": 0.33333333333333337,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/microservices/src/disconnected.controller.ts",
+    "integration/security/src/app.controller.ts",
+    "packages/core/router/router-explorer.ts",
+    "packages/platform-express/adapters/express-adapter.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "UploadedFiles",
+   "file": "packages/common/decorators/http/route-params.decorator.ts",
+   "ambiguous": true,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/file-upload/src/upload.module.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "RoutePathFactory",
+   "file": "packages/core/router/route-path-factory.ts",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 3,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "ArgumentsHost",
+   "file": "packages/common/interfaces/features/arguments-host.interface.ts",
+   "ambiguous": true,
+   "n_ours": 19,
+   "n_truth": 5,
+   "precision": 0.21052631578947367,
+   "recall": 0.8,
+   "f1": 0.3333333333333333,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/graphql-code-first/src/common/filters/unauthorized.filter.ts",
+    "integration/inspector/src/common/filters/http-exception.filter.ts",
+    "integration/nest-application/observable-response/src/app.controller.ts",
+    "integration/query-method/src/query-method.controller.ts",
+    "integration/scopes/src/durable/durable.filter.ts"
+   ],
+   "missed_files": [
+    "packages/common/index.ts"
+   ]
+  },
+  {
+   "tier": "mid",
+   "name": "NotFoundException",
+   "file": "packages/common/exceptions/not-found.exception.ts",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 1,
+   "precision": 0.3333333333333333,
+   "recall": 1.0,
+   "f1": 0.5,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/graphql-code-first/src/recipes/recipes.resolver.ts",
+    "packages/core/router/routes-resolver.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "RouteConflictPolicy",
+   "file": "packages/common/interfaces/router-options.interface.ts",
+   "ambiguous": true,
+   "n_ours": 3,
+   "n_truth": 2,
+   "precision": 0.3333333333333333,
+   "recall": 0.5,
+   "f1": 0.4,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/core/application-config.ts",
+    "packages/core/router/route-conflict-detector.ts"
+   ],
+   "missed_files": [
+    "packages/common/index.ts"
+   ]
+  },
+  {
+   "tier": "mid",
+   "name": "ExceptionHandler",
+   "file": "packages/core/errors/exception-handler.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "ParamProperties",
+   "file": "packages/core/router/router-execution-context.ts",
+   "ambiguous": true,
+   "n_ours": 6,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/core/helpers/context-utils.ts",
+    "packages/core/helpers/external-context-creator.ts",
+    "packages/core/helpers/handler-metadata-storage.ts",
+    "packages/core/helpers/interfaces/external-handler-metadata.interface.ts",
+    "packages/microservices/context/rpc-context-creator.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "InvalidMiddlewareException",
+   "file": "packages/core/errors/exceptions/invalid-middleware.exception.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "IntrospectionResult",
+   "file": "packages/common/interfaces/modules/introspection-result.interface.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/core/injector/module-ref.ts"
+   ],
+   "missed_files": [
+    "packages/common/index.ts"
+   ]
+  },
+  {
+   "tier": "leaf",
+   "name": "UndefinedDependencyException",
+   "file": "packages/core/errors/exceptions/undefined-dependency.exception.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "ProducerConfig",
+   "file": "packages/microservices/external/kafka.interface.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "isClassProvider",
+   "file": "packages/core/injector/helpers/provider-classifier.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "ExternalExceptionFilter",
+   "file": "packages/core/exceptions/external-exception-filter.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "callOperator",
+   "file": "packages/core/hooks/on-app-shutdown.hook.ts",
+   "ambiguous": true,
+   "n_ours": 4,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/core/hooks/before-app-shutdown.hook.ts",
+    "packages/core/hooks/on-app-bootstrap.hook.ts",
+    "packages/core/hooks/on-module-destroy.hook.ts",
+    "packages/core/hooks/on-module-init.hook.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "MiddlewareResolver",
+   "file": "packages/core/middleware/resolver.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "LazyModuleLoaderLoadOptions",
+   "file": "packages/core/injector/lazy-module-loader/lazy-module-loader-options.interface.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "PartitionerArgs",
+   "file": "packages/microservices/external/kafka.interface.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "integration/microservices/src/kafka-concurrent/kafka-concurrent.controller.ts"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "InvalidProviderException",
+   "file": "packages/core/errors/exceptions/invalid-provider.exception.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "WsParamsFactory",
+   "file": "packages/websockets/factories/ws-params-factory.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "MisdirectedException",
+   "file": "packages/common/exceptions/misdirected.exception.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "evaluateCrossOriginRequest",
+   "file": "packages/core/security/cross-origin-protection.ts",
+   "ambiguous": false,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "WsArgumentsHost",
+   "file": "packages/common/interfaces/features/arguments-host.interface.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "packages/core/helpers/execution-context-host.ts"
+   ],
+   "missed_files": [
+    "packages/common/internal.ts"
+   ]
+  },
+  {
+   "tier": "leaf",
+   "name": "ByReferenceModuleOpaqueKeyFactory",
+   "file": "packages/core/injector/opaque-key-factory/by-reference-module-opaque-key-factory.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "getEnvLogLevels",
+   "file": "packages/common/services/utils/get-env-log-levels.util.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "CustomVersioningOptions",
+   "file": "packages/common/interfaces/version-options.interface.ts",
+   "ambiguous": false,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "NotImplementedException",
+   "file": "packages/common/exceptions/not-implemented.exception.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "GetReplFn",
+   "file": "packages/core/repl/native-functions/get-repl-fn.ts",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  }
+ ]
+}

@@ -1,0 +1,1342 @@
+{
+ "repo": {
+  "name": "pytest",
+  "url": "https://github.com/pytest-dev/pytest",
+  "sha": "587ebc501ba292539202a1aac3a7f5b0112a08ec",
+  "lang": "python"
+ },
+ "build_seconds": 1.8882241249084473,
+ "peak_rss_mb": 70.203125,
+ "db_mb": 4.1984,
+ "summary": "indexed 274 files, 7374 symbols, 43369 edges, 47 communities",
+ "rows": [
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/terminalprogress.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "fixture",
+   "file": "src/_pytest/fixtures.py",
+   "ambiguous": true,
+   "n_ours": 52,
+   "n_truth": 21,
+   "precision": 0.28846153846153844,
+   "recall": 0.7142857142857143,
+   "f1": 0.410958904109589,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "doc/en/example/fixtures/test_fixtures_order_autouse.py",
+    "doc/en/example/fixtures/test_fixtures_order_autouse_multiple_scopes.py",
+    "doc/en/example/fixtures/test_fixtures_order_autouse_temp_effects.py",
+    "doc/en/example/fixtures/test_fixtures_order_dependencies.py",
+    "doc/en/example/fixtures/test_fixtures_order_scope.py"
+   ],
+   "missed_files": [
+    "bench/manyparam.py",
+    "testing/test_monkeypatch.py",
+    "testing/test_parseopt.py",
+    "testing/test_pluginmanager.py",
+    "testing/test_python_path.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "Pytester",
+   "file": "src/_pytest/pytester.py",
+   "ambiguous": false,
+   "n_ours": 59,
+   "n_truth": 30,
+   "precision": 0.5084745762711864,
+   "recall": 1.0,
+   "f1": 0.6741573033707865,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/legacypath.py",
+    "testing/acceptance_test.py",
+    "testing/code/test_excinfo.py",
+    "testing/deprecated_test.py",
+    "testing/examples/test_issue519.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "fixture",
+   "file": "src/_pytest/fixtures.py",
+   "ambiguous": true,
+   "n_ours": 52,
+   "n_truth": 21,
+   "precision": 0.28846153846153844,
+   "recall": 0.7142857142857143,
+   "f1": 0.410958904109589,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "doc/en/example/fixtures/test_fixtures_order_autouse.py",
+    "doc/en/example/fixtures/test_fixtures_order_autouse_multiple_scopes.py",
+    "doc/en/example/fixtures/test_fixtures_order_autouse_temp_effects.py",
+    "doc/en/example/fixtures/test_fixtures_order_dependencies.py",
+    "doc/en/example/fixtures/test_fixtures_order_scope.py"
+   ],
+   "missed_files": [
+    "bench/manyparam.py",
+    "testing/test_monkeypatch.py",
+    "testing/test_parseopt.py",
+    "testing/test_pluginmanager.py",
+    "testing/test_python_path.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "Item",
+   "file": "src/_pytest/nodes.py",
+   "ambiguous": false,
+   "n_ours": 28,
+   "n_truth": 24,
+   "precision": 0.8214285714285714,
+   "recall": 0.9583333333333334,
+   "f1": 0.8846153846153847,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/assertion/__init__.py",
+    "src/_pytest/cacheprovider.py",
+    "src/_pytest/fixtures.py",
+    "src/_pytest/legacypath.py",
+    "src/_pytest/mark/__init__.py"
+   ],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/pytester.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "raises",
+   "file": "src/_pytest/raises.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 25,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": 0.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "testing/test_assertion.py",
+    "testing/test_assertrewrite.py",
+    "testing/test_cacheprovider.py",
+    "testing/test_capture.py",
+    "testing/test_compat.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "pytester",
+   "file": "src/_pytest/pytester.py",
+   "ambiguous": true,
+   "n_ours": 60,
+   "n_truth": 28,
+   "precision": 0.4666666666666667,
+   "recall": 1.0,
+   "f1": 0.6363636363636364,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "doc/en/example/assertion/test_failures.py",
+    "src/_pytest/legacypath.py",
+    "testing/acceptance_test.py",
+    "testing/code/test_excinfo.py",
+    "testing/deprecated_test.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/assertion/__init__.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "assert_outcomes",
+   "file": "src/_pytest/pytester_assertions.py",
+   "ambiguous": true,
+   "n_ours": 35,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/pytester.py",
+    "testing/acceptance_test.py",
+    "testing/deprecated_test.py",
+    "testing/examples/test_issue519.py",
+    "testing/logging/test_fixture.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/mark/__init__.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 1,
+   "precision": 0.0,
+   "recall": 0.0,
+   "f1": 0.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "testing/test_mark.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/faulthandler.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/warnings.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/hookspec.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/threadexception.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/legacypath.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "param",
+   "file": "src/_pytest/mark/__init__.py",
+   "ambiguous": true,
+   "n_ours": 26,
+   "n_truth": 16,
+   "precision": 0.5384615384615384,
+   "recall": 0.875,
+   "f1": 0.6666666666666667,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "comment/docstring"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ]
+   ],
+   "false_files": [
+    "bench/manyparam.py",
+    "doc/en/example/multipython.py",
+    "src/_pytest/fixtures.py",
+    "src/_pytest/junitxml.py",
+    "src/_pytest/mark/structures.py"
+   ],
+   "missed_files": [
+    "testing/test_error_diffs.py",
+    "testing/test_main.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "fixture",
+   "file": "src/_pytest/fixtures.py",
+   "ambiguous": true,
+   "n_ours": 52,
+   "n_truth": 21,
+   "precision": 0.28846153846153844,
+   "recall": 0.7142857142857143,
+   "f1": 0.410958904109589,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "doc/en/example/fixtures/test_fixtures_order_autouse.py",
+    "doc/en/example/fixtures/test_fixtures_order_autouse_multiple_scopes.py",
+    "doc/en/example/fixtures/test_fixtures_order_autouse_temp_effects.py",
+    "doc/en/example/fixtures/test_fixtures_order_dependencies.py",
+    "doc/en/example/fixtures/test_fixtures_order_scope.py"
+   ],
+   "missed_files": [
+    "bench/manyparam.py",
+    "testing/test_monkeypatch.py",
+    "testing/test_parseopt.py",
+    "testing/test_pluginmanager.py",
+    "testing/test_python_path.py"
+   ]
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/cacheprovider.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "hub",
+   "name": "pytest_configure",
+   "file": "src/_pytest/unraisableexception.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_addoption",
+   "file": "src/_pytest/runner.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_make_collect_report",
+   "file": "src/_pytest/runner.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_report_header",
+   "file": "src/_pytest/cacheprovider.py",
+   "ambiguous": true,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/terminal.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_collect_directory",
+   "file": "src/_pytest/main.py",
+   "ambiguous": true,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/python.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "ExceptionChainRepr",
+   "file": "src/_pytest/_code/code.py",
+   "ambiguous": false,
+   "n_ours": 6,
+   "n_truth": 6,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "expr",
+   "file": "src/_pytest/mark/expression.py",
+   "ambiguous": false,
+   "n_ours": 6,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "inside string"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "inside string"
+    ],
+    [
+     "bare identifier (collision/other binding)",
+     "comment/docstring",
+     "inside string"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/assertion/rewrite.py",
+    "src/_pytest/mark/__init__.py",
+    "testing/python/raises.py",
+    "testing/test_assertrewrite.py",
+    "testing/test_mark.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "UsageError",
+   "file": "src/_pytest/config/exceptions.py",
+   "ambiguous": false,
+   "n_ours": 19,
+   "n_truth": 20,
+   "precision": 1.0,
+   "recall": 0.95,
+   "f1": 0.9743589743589743,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_pycollect_makeitem",
+   "file": "src/_pytest/hookspec.py",
+   "ambiguous": true,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/python.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_runtest_makereport",
+   "file": "src/_pytest/tmpdir.py",
+   "ambiguous": true,
+   "n_ours": 3,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/runner.py",
+    "src/_pytest/subtests.py",
+    "src/_pytest/unittest.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_unconfigure",
+   "file": "src/_pytest/mark/__init__.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "ConftestImportFailure",
+   "file": "src/_pytest/config/__init__.py",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 3,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "Class",
+   "file": "src/_pytest/python.py",
+   "ambiguous": true,
+   "n_ours": 10,
+   "n_truth": 6,
+   "precision": 0.5,
+   "recall": 0.8333333333333334,
+   "f1": 0.625,
+   "false_kinds": [
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "bare identifier (collision/other binding)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/scope.py",
+    "testing/deprecated_test.py",
+    "testing/python/metafunc.py",
+    "testing/test_compat.py",
+    "testing/test_scope.py"
+   ],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_cmdline_main",
+   "file": "src/_pytest/mark/__init__.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_collection_modifyitems",
+   "file": "src/_pytest/mark/__init__.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "dummy_highlighter",
+   "file": "src/_pytest/assertion/highlight.py",
+   "ambiguous": false,
+   "n_ours": 4,
+   "n_truth": 5,
+   "precision": 1.0,
+   "recall": 0.8,
+   "f1": 0.888888888888889,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "src/_pytest/assertion/util.py"
+   ]
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_exception_interact",
+   "file": "src/_pytest/hookspec.py",
+   "ambiguous": true,
+   "n_ours": 3,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ],
+    [
+     "attribute-access (x.name)"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/runner.py",
+    "src/_pytest/subtests.py",
+    "src/_pytest/unittest.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "safe_getattr",
+   "file": "src/_pytest/compat.py",
+   "ambiguous": false,
+   "n_ours": 4,
+   "n_truth": 4,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "pytest_addoption",
+   "file": "src/_pytest/pastebin.py",
+   "ambiguous": true,
+   "n_ours": 0,
+   "n_truth": 0,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "mid",
+   "name": "warns",
+   "file": "src/_pytest/recwarn.py",
+   "ambiguous": true,
+   "n_ours": 12,
+   "n_truth": 13,
+   "precision": 1.0,
+   "recall": 0.9230769230769231,
+   "f1": 0.9600000000000001,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "mid",
+   "name": "absolutepath",
+   "file": "src/_pytest/pathlib.py",
+   "ambiguous": false,
+   "n_ours": 9,
+   "n_truth": 9,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "PytestReturnNotNoneWarning",
+   "file": "src/_pytest/warning_types.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 2,
+   "precision": 1.0,
+   "recall": 0.5,
+   "f1": 0.6666666666666666,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "leaf",
+   "name": "SubtestContext",
+   "file": "src/_pytest/subtests.py",
+   "ambiguous": false,
+   "n_ours": 2,
+   "n_truth": 2,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "ReprLocals",
+   "file": "src/_pytest/_code/code.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "ApproxScalar",
+   "file": "src/_pytest/approx.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "pytest_make_parametrize_id",
+   "file": "src/_pytest/hookspec.py",
+   "ambiguous": true,
+   "n_ours": 1,
+   "n_truth": 0,
+   "precision": 0.0,
+   "recall": 1.0,
+   "f1": 0.0,
+   "false_kinds": [
+    [
+     "attribute-access (x.name)",
+     "bare identifier (collision/other binding)",
+     "comment/docstring"
+    ]
+   ],
+   "false_files": [
+    "src/_pytest/python.py"
+   ],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "_is_main_py",
+   "file": "src/_pytest/doctest.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "RaisesExc",
+   "file": "src/_pytest/raises.py",
+   "ambiguous": false,
+   "n_ours": 3,
+   "n_truth": 4,
+   "precision": 1.0,
+   "recall": 0.75,
+   "f1": 0.8571428571428571,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "leaf",
+   "name": "LogCaptureHandler",
+   "file": "src/_pytest/logging.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "_split_help_text",
+   "file": "src/_pytest/config/argparsing.py",
+   "ambiguous": false,
+   "n_ours": 2,
+   "n_truth": 2,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "is_fully_escaped",
+   "file": "src/_pytest/raises.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "get_user_id",
+   "file": "src/_pytest/compat.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "DoctestTextfile",
+   "file": "src/_pytest/doctest.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "get_unpacked_marks",
+   "file": "src/_pytest/mark/structures.py",
+   "ambiguous": false,
+   "n_ours": 2,
+   "n_truth": 2,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "CallableBool",
+   "file": "src/_pytest/compat.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "insert_missing_modules",
+   "file": "src/_pytest/pathlib.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "module_name_from_path",
+   "file": "src/_pytest/pathlib.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "Testdir",
+   "file": "src/_pytest/legacypath.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 2,
+   "precision": 1.0,
+   "recall": 0.5,
+   "f1": 0.6666666666666666,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": [
+    "src/pytest/__init__.py"
+   ]
+  },
+  {
+   "tier": "leaf",
+   "name": "show_version_verbose",
+   "file": "src/_pytest/helpconfig.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "ColoredLevelFormatter",
+   "file": "src/_pytest/logging.py",
+   "ambiguous": false,
+   "n_ours": 1,
+   "n_truth": 1,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  },
+  {
+   "tier": "leaf",
+   "name": "PrintHelp",
+   "file": "src/_pytest/config/exceptions.py",
+   "ambiguous": false,
+   "n_ours": 2,
+   "n_truth": 2,
+   "precision": 1.0,
+   "recall": 1.0,
+   "f1": 1.0,
+   "false_kinds": [],
+   "false_files": [],
+   "missed_files": []
+  }
+ ]
+}

@@ -1,0 +1,141 @@
+{
+ "expected_files": [
+  "src/_pytest/_code/code.py",
+  "src/_pytest/assertion/rewrite.py",
+  "src/_pytest/config/__init__.py",
+  "src/_pytest/config/findpaths.py",
+  "src/_pytest/fixtures.py",
+  "src/_pytest/main.py",
+  "src/_pytest/nodes.py",
+  "src/_pytest/pathlib.py",
+  "src/_pytest/terminal.py",
+  "testing/test_config.py"
+ ],
+ "wall_s": 5.656996726989746,
+ "stage_a_raw": {
+  "duration_api_ms": 4591,
+  "stop_reason": "tool_use",
+  "session_id": "678f9834-c160-4795-bfc0-5bd0822f8184",
+  "total_cost_usd": 0.0153846,
+  "usage": {
+   "input_tokens": 4,
+   "cache_creation_input_tokens": 1497,
+   "cache_read_input_tokens": 40086,
+   "output_tokens": 538,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 1497,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "global",
+   "iterations": [
+    {
+     "input_tokens": 2,
+     "output_tokens": 345,
+     "cache_read_input_tokens": 20043,
+     "cache_creation_input_tokens": 1497,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1497
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard",
+   "fallback_credit": null
+  },
+  "modelUsage": {
+   "claude-sonnet-5-5": {
+    "inputTokens": 4,
+    "outputTokens": 538,
+    "cacheReadInputTokens": 40086,
+    "cacheCreationInputTokens": 1497,
+    "webSearchRequests": 0,
+    "costUSD": 0.0153846,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 128000,
+    "thinkingTokens": 0,
+    "canonicalModel": "claude-sonnet-5-5",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  },
+  "permission_denials": [],
+  "terminal_reason": "max_turns",
+  "fast_mode_state": "off",
+  "fast_mode_disabled_reason": "sdk_opt_in_required",
+  "subagent_stats": {
+   "spawned": 0,
+   "requested": {
+    "background": 0,
+    "foreground": 0,
+    "unset": 0
+   },
+   "started_in_background": 0,
+   "max_depth": 0,
+   "spawned_by_subagents": 0,
+   "completed": 0,
+   "failed": 0,
+   "killed": {
+    "parent": 0,
+    "user": 0,
+    "system": 0
+   },
+   "refused": {
+    "depth_limit": 0,
+    "concurrency_limit": 0,
+    "budget": 0
+   },
+   "by_type": {}
+  },
+  "safety_stops": 0,
+  "is_error": true,
+  "num_turns": 3,
+  "subtype": "error_max_turns",
+  "errors": [
+   "Reached maximum number of turns (2)"
+  ],
+  "type": "result",
+  "duration_ms": 4681,
+  "uuid": "26cbab3e-73b9-4970-a03f-51ab9e6cbe20",
+  "queued_turn_count": 0,
+  "result_index": 0
+ },
+ "interrupted_check": {
+  "success": false,
+  "defined_in_new_module": false,
+  "still_defined_in_old": true,
+  "files_with_wrong_imports": [
+   "src/_pytest/_code/code.py",
+   "src/_pytest/assertion/rewrite.py",
+   "src/_pytest/config/__init__.py",
+   "src/_pytest/config/findpaths.py",
+   "src/_pytest/fixtures.py",
+   "src/_pytest/main.py",
+   "src/_pytest/nodes.py",
+   "src/_pytest/terminal.py",
+   "testing/test_config.py"
+  ],
+  "collateral": [],
+  "imports_ok": true,
+  "tests_pass": true,
+  "tests_tail": [
+   "........................                                                 [100%]"
+  ]
+ },
+ "notes": {
+  "goal": "Move absolutepath from src/_pytest/pathlib.py to new src/_pytest/_abspath.py; update all imports/uses in src/ and testing/; no re-export/alias in pathlib.py; no other changes or behavior change.",
+  "constraint": [],
+  "decision": [],
+  "rejected": [],
+  "open": [],
+  "next": []
+ }
+}
