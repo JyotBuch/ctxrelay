@@ -60,11 +60,16 @@ def make_work(task: str, cond: str, tag: str) -> Path:
     w = WORK / f"{task}_{cond}_{tag}"
     if w.exists():
         shutil.rmtree(w)
-    w.mkdir(parents=True)
-    overlay(task, "base", w)
-    sh(["git", "init", "-q"], w)
-    sh([*GIT, "add", "-A"], w)
-    sh([*GIT, "commit", "-q", "-m", "base"], w)
+    repo = load(task).get("repo")
+    if repo:  # a real pinned checkout from eval/.cache (see eval/fetch.sh), already a clean git repo
+        shutil.copytree(HERE.parents[0] / ".cache" / repo, w, symlinks=True,
+                        ignore=shutil.ignore_patterns(".ctxrelay", "__pycache__", ".pytest_cache"))
+    else:
+        w.mkdir(parents=True)
+        overlay(task, "base", w)
+        sh(["git", "init", "-q"], w)
+        sh([*GIT, "add", "-A"], w)
+        sh([*GIT, "commit", "-q", "-m", "base"], w)
     overlay(task, "interrupted", w)  # partial work stays uncommitted
     return w
 
@@ -78,8 +83,9 @@ def naive_handoff(t: dict, w: Path) -> str:
 def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
     """Prepare the working tree for a condition; returns (prompt, extra codex -c args)."""
     t = load(task)
+    hint = t.get("run_hint", "python -m pytest -q tests")
     base = ("A previous session may have started this task and been interrupted, so the repository may contain partial "
-            "work. Finish the task. Run `python -m pytest -q tests` when done.\n\nTask: " + t["statement"])
+            f"work. Finish the task. Run `{hint}` when done.\n\nTask: " + t["statement"])
     if cond == "C0":
         return base, []
     if cond == "C1":
@@ -88,7 +94,7 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
     if cond == "C2":
         (w / "HANDOFF.md").write_text(naive_handoff(t, w))
         return ("You are continuing a task another session started. Read HANDOFF.md first, check it against the code, then "
-                "finish the task. Run `python -m pytest -q tests` when done.\n\nTask: " + t["statement"]), []
+                f"finish the task. Run `{hint}` when done.\n\nTask: " + t["statement"]), []
     # C3: real ctxrelay state, as the hooks and notes would have left it
     from ctxrelay import state
     cwd = os.getcwd()
@@ -108,7 +114,7 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
         sh(["ctxrelay", "switch", "print"], w)
         return ("You are continuing a task started in another session, possibly with a different model. Read "
                 ".ctxrelay/HANDOFF.md first, check it against the actual code, then continue from 'Exact next action'. "
-                "Finish the task. Run `python -m pytest -q tests` when done."), []
+                f"Finish the task. Run `{hint}` when done."), []
     sh(["ctxrelay", "init"], w)
     sh(["ctxrelay", "switch", "print"], w)
     (w / "mcp.json").write_text(json.dumps({"mcpServers": {"ctxrelay": {"command": str(BIN / "ctxrelay"), "args": ["serve"]}}}))
@@ -116,16 +122,20 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
            "-c", 'mcp_servers.ctxrelay.default_tools_approval_mode="approve"']
     return ("You are continuing a task started in another session, possibly with a different model. Read "
             ".ctxrelay/HANDOFF.md first, check it against the actual code, then continue from 'Exact next action'. "
-            "Finish the task. Run `python -m pytest -q tests` when done."), cfg
+            f"Finish the task. Run `{hint}` when done."), cfg
 
 
 def check(task: str, w: Path) -> dict:
     solution = set(overlay_names(task, "solution"))
     shutil.rmtree(w / "hidden", ignore_errors=True)
     overlay_hidden(task, w)
-    env = {"PYTHONPATH": str(w)}
-    hidden = sh([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "hidden"], w, env=env)
-    visible = sh([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "tests"], w, env=env)
+    t = load(task)
+    big = bool(t.get("repo"))
+    env = {"PYTHONPATH": f"{w / 'src'}:{w}" if big else str(w)}
+    isolate = ["-c", os.devnull, "--rootdir", str(w / "hidden"), "--noconftest"] if big else []
+    hidden = sh([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *isolate, "hidden"], w, 600, env=env)
+    visible = sh([sys.executable, "-m", "pytest", "-p", "no:cacheprovider", *t.get("visible_args", ["tests", "-q"])],
+                 w, 900, env=env)
     shutil.rmtree(w / "hidden", ignore_errors=True)
     changed = sorted(line[3:] for line in sh(["git", "status", "--porcelain", "-uall"], w).stdout.splitlines()
                      if not any(n in line[3:] for n in NOISE))

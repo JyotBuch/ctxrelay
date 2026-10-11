@@ -1,0 +1,38 @@
+{
+  "repo": "pytest",
+  "statement": "Move the function `safe_isclass` out of src/_pytest/compat.py into a new module src/_pytest/_classcheck.py. Don't change behavior.",
+  "notes": {
+    "goal": "Move safe_isclass from src/_pytest/compat.py to a new module src/_pytest/_classcheck.py without changing behavior.",
+    "constraint": [
+      "User requirement: third-party plugins import safe_isclass from _pytest.compat, so compat must keep a working safe_isclass that emits a DeprecationWarning and forwards to the new module.",
+      "Internal code and tests must import it from _pytest._classcheck, not from compat."
+    ],
+    "decision": [
+      "Keep a small forwarding function in compat.py (not a bare re-export import, so the warning can be emitted)."
+    ],
+    "rejected": [
+      "A plain move with nothing left in compat: breaks plugins."
+    ],
+    "hypothesis": [],
+    "open": [],
+    "next": [
+      "Create the DeprecationWarning forwarder in compat.py; switch src/_pytest/fixtures.py and testing/test_compat.py to import from _pytest._classcheck (python.py is already done)."
+    ]
+  },
+  "events": [
+    {
+      "kind": "edit",
+      "file": "src/_pytest/_classcheck.py"
+    },
+    {
+      "kind": "edit",
+      "file": "src/_pytest/python.py"
+    }
+  ],
+  "summary": "The previous session created src/_pytest/_classcheck.py with safe_isclass and updated src/_pytest/python.py. The user requires compat.py to keep a working safe_isclass for third-party plugins that emits a DeprecationWarning and forwards to the new module, while internal code and tests import from the new module. Still to do: the forwarder in compat.py, and src/_pytest/fixtures.py and testing/test_compat.py imports.",
+  "visible_args": [
+    "testing/test_compat.py",
+    "-q"
+  ],
+  "run_hint": "python -m pytest -q testing/test_compat.py"
+}
