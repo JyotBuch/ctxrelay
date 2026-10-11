@@ -19,3 +19,33 @@ ctxrelay = "ctxrelay.cli:main"
 
 [tool.setuptools]
 packages = ["ctxrelay"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10", "build", "twine"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+extend-exclude = ["eval/.cache"]
+
+[tool.ruff.lint]
+# Hygiene and likely-bug rules only; style opinions are left to review.
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "RUF100", "PIE"]
+ignore = ["SIM108", "SIM905", "B905"]
+
+[tool.ruff.lint.per-file-ignores]
+# eval/ is research scaffolding: correctness rules still apply, style-only rules are relaxed
+"eval/**" = ["E501", "E741", "E731", "C408", "B007", "B023", "SIM115", "UP031"]
+"tests/**" = ["B011", "E501", "E741"]
+
+[tool.mypy]
+python_version = "3.10"  # oldest mypy supports; runtime 3.9 is covered by the CI test matrix
+files = ["ctxrelay"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+check_untyped_defs = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

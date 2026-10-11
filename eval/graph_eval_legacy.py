@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from ctxrelay import graph  # noqa: E402
+from ctxrelay import graph
 
 _defs = graph._defs
 graph._defs = lambda rel, text: ((n, k, l, False) for n, k, l, _m in _defs(rel, text))

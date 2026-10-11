@@ -22,18 +22,21 @@ TOOLS = {
     "graph_impact": (_tool("graph_impact", "Transitive callers: what may break if this symbol changes.",
                            {"name": STR, "depth": {"type": "integer"}}, ["name"]),
                      lambda a: graph.impact(a["name"], int(a.get("depth", 3)))),
-    "graph_community": (_tool("graph_community", "With no number, list communities (file clusters). With a number, list its files.",
+    "graph_community": (_tool("graph_community", "With no number, list communities (file clusters). "
+                              "With a number, list its files.",
                               {"number": {"type": "integer"}}),
                         lambda a: graph.community(a.get("number"))),
     "graph_hubs": (_tool("graph_hubs", "Most-depended-on symbols."), lambda a: graph.hubs()),
     "graph_file": (_tool("graph_file", "Symbols defined in a file.", {"path": STR}, ["path"]),
                    lambda a: graph.file_summary(a["path"])),
     "search_code": (_tool("search_code", "Find code by natural-language description (needs colgrep installed). "
-                                      "Use when you don't know the name; use graph_* when you do.", {"query": STR}, ["query"]),
+                                      "Use when you don't know the name; use graph_* when you do.",
+                                      {"query": STR}, ["query"]),
                     lambda a: graph.search(a["query"])),
     "graph_reindex": (_tool("graph_reindex", "Rebuild the code graph."), lambda a: graph.build(state.root())),
     "handoff_note": (_tool("handoff_note",
-                           "Record durable task state for a future model: goal, constraint, decision, rejected, open, next. "
+                           "Record durable task state for a future model: goal, constraint, decision, rejected, open, "
+                           "next. "
                            "Call this whenever you make a decision or rule something out.",
                            {"kind": {"type": "string", "enum": list(state.KINDS)}, "text": STR}, ["kind", "text"]),
                      lambda a: state.add_note(a["kind"], a["text"])),

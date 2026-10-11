@@ -83,10 +83,10 @@ def cmd_query(a):
         print(graph.hubs())
 
 
-def main(argv=None):
+def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="ctxrelay", description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("init", help="write AGENTS.md/CLAUDE.md/GEMINI.md rules and build the graph").set_defaults(fn=cmd_init)
+    sub.add_parser("init", help="write AGENTS.md/CLAUDE.md/GEMINI.md rules, build the graph").set_defaults(fn=cmd_init)
     sub.add_parser("index", help="rebuild the code graph").set_defaults(fn=lambda _: print(graph.build(state.root())))
     sub.add_parser("serve", help="run the MCP server (stdio)").set_defaults(fn=lambda _: mcp_server.serve())
     n = sub.add_parser("note", help="record task state")
@@ -107,7 +107,11 @@ def main(argv=None):
     q.add_argument("what", choices=["find", "callers", "callees", "impact", "file", "community", "hubs", "search"])
     q.add_argument("arg", nargs="?")
     q.set_defaults(fn=cmd_query)
-    a = ap.parse_args(argv)
+    return ap
+
+
+def main(argv=None):
+    a = build_parser().parse_args(argv)
     try:
         a.fn(a)
     except (RuntimeError, ValueError) as e:
