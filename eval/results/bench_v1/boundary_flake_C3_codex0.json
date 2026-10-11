@@ -1,0 +1,18 @@
+{
+ "task": "boundary_flake",
+ "cond": "C3",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 33.2,
+ "tool_calls": 8,
+ "mcp_calls": 3,
+ "input_tokens": 66302,
+ "cached_tokens": 52224,
+ "uncached_tokens": 14078,
+ "output_tokens": 948,
+ "success": true,
+ "hidden_pass": true,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "..                                                                       [100%]"
+}

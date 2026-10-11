@@ -12,10 +12,11 @@ MARK_START, MARK_END = "<!-- ctxrelay:start -->", "<!-- ctxrelay:end -->"
 RULES = f"""{MARK_START}
 ## Context handoff (ctxrelay)
 - At the start of a session, read `.ctxrelay/HANDOFF.md` if it exists.
-- When you make a decision, rule out an option, hit a constraint or leave a question open, record it with the
-  `handoff_note` MCP tool (or `ctxrelay note <kind> "<text>"`).
-  Kinds: goal, constraint, decision, rejected, hypothesis, open, next. Keep the last `next` note an exact action.
-  Edits, test runs and failures are captured automatically; notes are for intent.
+- Edits, test runs and failures are captured automatically. Record a note with the `handoff_note` MCP tool (or
+  `ctxrelay note <kind> "<text>"`) only for what a successor could not see from the code and git: the goal, a hard
+  requirement from the user, a decision with its reason, an option you ruled out and why. Kinds: goal, constraint,
+  decision, rejected, hypothesis, open, next. Do not log progress or completion; at most one `next` note,
+  an exact action.
 - Before reading many files to understand structure, query the code graph (`graph_*` MCP tools or `ctxrelay q ...`).
   If you don't know a symbol's name, describe what you want with `search_code` (or `ctxrelay q search "..."`).
 {MARK_END}

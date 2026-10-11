@@ -7,6 +7,7 @@ Conditions, all starting from identical working trees:
   C1 git       C0 + `git status` / `git diff --stat` (AGENTS.md exists in every condition)
   C2 naive     a generated HANDOFF.md: prose summary of the previous session + full `git diff` + last commands
   C3 ctxrelay  the real ctxrelay handoff (notes + captured events + git + graph) and MCP tools
+  C4 file only the same ctxrelay handoff file, but no MCP server and no ctxrelay rules in AGENTS.md
 LIMITATION: the previous session is scripted, so C2 and C3 get the same facts; this isolates how the information is
 delivered (structure, graph, tools), not whether a real agent would have recorded it. Tasks are small and Python-only.
 
@@ -29,7 +30,7 @@ TASKS = HERE / "tasks"
 OUT = HERE.parents[0] / "results" / "bench"
 WORK = Path(os.environ.get("BENCH_WORK", HERE.parents[0] / ".cache" / "bench"))
 BIN = Path(sys.executable).parent
-CONDS = ("C0", "C1", "C2", "C3")
+CONDS = ("C0", "C1", "C2", "C3", "C4")
 NOISE = ("AGENTS.md", "CLAUDE.md", "GEMINI.md", ".ctxrelay", "HANDOFF.md", "mcp.json", "__pycache__", ".pytest_cache", "hidden")
 GIT = ["git", "-c", "user.name=bench", "-c", "user.email=b@b"]
 
@@ -103,6 +104,11 @@ def setup(task: str, cond: str, w: Path) -> tuple[str, list[str]]:
                 fh.write(json.dumps({"ts": "t", "src": "hook", **e}) + "\n")
     finally:
         os.chdir(cwd)
+    if cond == "C4":
+        sh(["ctxrelay", "switch", "print"], w)
+        return ("You are continuing a task started in another session, possibly with a different model. Read "
+                ".ctxrelay/HANDOFF.md first, check it against the actual code, then continue from 'Exact next action'. "
+                "Finish the task. Run `python -m pytest -q tests` when done."), []
     sh(["ctxrelay", "init"], w)
     sh(["ctxrelay", "switch", "print"], w)
     (w / "mcp.json").write_text(json.dumps({"mcpServers": {"ctxrelay": {"command": str(BIN / "ctxrelay"), "args": ["serve"]}}}))

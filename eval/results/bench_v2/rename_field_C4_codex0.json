@@ -1,0 +1,18 @@
+{
+ "task": "rename_field",
+ "cond": "C4",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 27.3,
+ "tool_calls": 6,
+ "mcp_calls": 0,
+ "input_tokens": 78494,
+ "cached_tokens": 73088,
+ "uncached_tokens": 5406,
+ "output_tokens": 758,
+ "success": true,
+ "hidden_pass": true,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "....                                                                     [100%]"
+}

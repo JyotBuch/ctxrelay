@@ -133,3 +133,17 @@ Reading it:
   the 60 structure lookups (its `called_by` was empty there, which lowers its score); colgrep's `called_by`
   gives caller names, not files, so mapping names to files adds ambiguity; and colgrep indexed `src/` only, so
   all structure scoring ignores tests.
+
+## Eval 3: handoff benchmark (eval/bench, Codex as the continuing model, scripted interruption)
+Single runs unless noted; tiny Python repos; the previous session is scripted, so C2 and C3 carry the same facts.
+**Pilot (`results/bench_v1`, 4 tasks x 1 run):** success C0 cold 2/4, C1 git status 2/4, C2 naive prose handoff 4/4,
+C3 ctxrelay 4/4. Cold start failed on the two tasks with hidden user requirements; the other two tasks did not
+discriminate. C3 used up to ~6x the uncached tokens of C2 (26.5k vs 4.6k on `rename_field`).
+**Cause:** not the handoff size (~600 tokens) but extra tool round-trips: the old rules had the model log progress
+notes via MCP (4 `handoff_note` calls) and each round-trip re-sent context with fewer cache hits.
+**Follow-up (`results/bench_v2`, 2 tasks x 2 runs, tightened rules in AGENTS.md):** all runs succeeded.
+Median uncached tokens: ctxrelay with MCP (C3) 7.8k / 11.8k, same handoff file without MCP (C4) 4.9k / 5.4k
+(`boundary_flake` / `rename_field`); the naive handoff was 5.0k / 4.6k in the pilot. Tightening the rules cut C3
+from 14k / 26.5k to 7.8k / 11.8k. Without MCP the cost matches the naive handoff.
+**Reading:** the information is what helps; no evidence that ctxrelay's format beats a prose summary; MCP tools add
+cost on small tasks and have not yet shown a benefit. Next test: large repos where the graph could save exploration.

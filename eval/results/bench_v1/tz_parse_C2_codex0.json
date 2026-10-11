@@ -1,0 +1,18 @@
+{
+ "task": "tz_parse",
+ "cond": "C2",
+ "agent": "codex",
+ "rep": 0,
+ "wall_s": 33.8,
+ "tool_calls": 7,
+ "mcp_calls": 0,
+ "input_tokens": 62165,
+ "cached_tokens": 54016,
+ "uncached_tokens": 8149,
+ "output_tokens": 1134,
+ "success": true,
+ "hidden_pass": true,
+ "regression": false,
+ "collateral": [],
+ "hidden_tail": "....                                                                     [100%]"
+}
